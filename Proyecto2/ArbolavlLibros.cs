@@ -25,6 +25,29 @@ namespace Proyecto2
         {
             return nodo=null ? 0: obteneraltura(nodo.izquierda)=obteneraltura(nodo.derecha);
         }
-        
+        private int Max(int a, int b)
+        {
+            return a>b? a:b;
+        }
+        private Nodoarbol RotarDerecha(Nodoarbol y)
+        {
+            Nodoarbol x=y.izquierda;
+            Nodoarbol T2=x.derecha;
+            x.derecha=y;
+            y.izquierda=T2;
+            y.Altura=Max(obteneraltura(y.izquierda), obteneraltura(y.derecha));
+            x.Altura=Max(obteneraltura(x.izquierda), obteneraltura(x.derecha));
+            return x;
+        }
+        private Nodoarbol RotarIzquierda(Nodoarbol x)
+        {
+            Nodoarbol y= x.derecha;
+            Nodoarbol T2=y.izquierda;
+            y.izquierda=x;
+            x.derecha=T2;
+            x.Altura=Max(obteneraltura(x.izquierda), obteneraltura(x.derecha));
+            y.Altura=Max(obteneraltura(y.izquierda),obteneraltura(y.derecha));
+            return y;
+        }
     }
 }
