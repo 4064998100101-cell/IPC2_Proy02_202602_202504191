@@ -1,4 +1,0 @@
-namespace Proyecto_2
-{
-    
-}
