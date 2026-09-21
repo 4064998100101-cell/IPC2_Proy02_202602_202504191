@@ -1,25 +1,15 @@
-using System.Data.Common;
 using System.IO;
 using System.Xml.Linq;
+
 namespace Proyecto2
 {
     public class Xml
     {
-        public void RegistrarLibro(int isbn, string titulo, string autor, string nombreCategoria)
-        {
-            Libro nuevoLibro = new Libro(isbn, titulo, autor, nombreCategoria);
-            TodosLosLibrosGlobal.Insertar(nuevoLibro);
+        private readonly Catalogo _catalogo;
 
-            NodoCategoria cat = RaizCategorias.Buscar(nombreCategoria);
-            if (cat != null)
-            {
-                cat.LibrosAsociados.Insertar(nuevoLibro);
-            }
-            else
-            {
-                NodoCategoria nuevaCat = ObtenerOCrearCategoria(nombreCategoria, null);
-                nuevaCat.LibrosAsociados.Insertar(nuevoLibro);
-            }
+        public Xml(Catalogo catalogoManager)
+        {
+            _catalogo = catalogoManager;
         }
 
         public void ProcesarArchivoXml(string rutaArchivo)
@@ -31,7 +21,7 @@ namespace Proyecto2
 
             if (config == null) return;
 
-            // Procesar Categorías
+            // Procesar Lista de Categorías (Opcional / Incremental)
             XElement listaCategorias = config.Element("listaCategorias");
             if (listaCategorias != null)
             {
@@ -39,11 +29,11 @@ namespace Proyecto2
                 {
                     string nombreCategoria = catElement.Value;
                     string nombrePadre = catElement.Attribute("padre")?.Value;
-                    ObtenerOCrearCategoria(nombreCategoria, nombrePadre);
+                    _catalogo.ObtenerOCrearCategoria(nombreCategoria, nombrePadre);
                 }
             }
 
-            // Procesar Libros
+            // Procesar Lista de Libros (Opcional / Incremental)
             XElement listaLibros = config.Element("listaLibros");
             if (listaLibros != null)
             {
@@ -56,7 +46,7 @@ namespace Proyecto2
 
                     if (isbn > 0 && !string.IsNullOrEmpty(titulo))
                     {
-                        RegistrarLibro(isbn, titulo, autor, categoria);
+                        _catalogo.RegistrarLibro(isbn, titulo, autor, categoria);
                     }
                 }
             }

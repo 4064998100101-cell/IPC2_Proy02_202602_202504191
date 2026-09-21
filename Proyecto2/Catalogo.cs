@@ -5,13 +5,13 @@ namespace Proyecto2
 
     {
         
-       public ListaEnlazadaCategorias RaizCategorias { get; private set; }
-        public ListaEnlazadaLibros TodosLosLibrosGlobal { get; private set; }
+       public Listacategorias RaizCategorias { get; private set; }
+        public ListaLibros TodosLosLibrosGlobal { get; private set; }
 
-        public CatalogoManager()
+        public Catalogo()
         {
-            RaizCategorias = new ListaEnlazadaCategorias();
-            TodosLosLibrosGlobal = new ListaEnlazadaLibros();
+            RaizCategorias = new Listacategorias();
+            TodosLosLibrosGlobal = new ListaLibros();
         }
 
         public NodoCategoria ObtenerOCrearCategoria(string nombreCategoria, string nombrePadre)
