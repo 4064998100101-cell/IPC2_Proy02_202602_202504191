@@ -1,11 +1,11 @@
-namespace Proyecto2.Estructuras
+namespace Proyecto2
 {
     public class Nodocat 
     {
-        public Models.NodoCategoria Valor { get; set; }
+        public NodoCategoria Valor { get; set; }
         public Nodocat Siguiente { get; set; }
 
-        public Nodocat(Models.NodoCategoria categoria)
+        public Nodocat(NodoCategoria categoria)
         {
             Valor = categoria;
             Siguiente = null;
@@ -22,7 +22,7 @@ namespace Proyecto2.Estructuras
             Tamanio = 0;
         }
 
-        public void Insertar(Models.NodoCategoria nuevaCategoria)
+        public void Insertar(NodoCategoria nuevaCategoria)
         {
             Nodocat nuevoNodo = new Nodocat(nuevaCategoria);
             if (Cabeza == null)
@@ -51,7 +51,7 @@ namespace Proyecto2.Estructuras
             Tamanio++;
         }
 
-        public Models.NodoCategoria Buscar(string nombre)
+        public NodoCategoria Buscar(string nombre)
         {
             Nodocat actual = Cabeza;
             while (actual != null)

@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Proyecto2.Models
+namespace Proyecto2
 {
    public class Libro
     {

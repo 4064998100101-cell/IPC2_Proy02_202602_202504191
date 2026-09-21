@@ -1,11 +1,11 @@
-namespace Proyecto2.Estructuras
+namespace Proyecto2
 {
    public class NodoLibro
     {
-        public Models.Libro Valor { get; set; }
+        public Libro Valor { get; set; }
         public NodoLibro Siguiente { get; set; }
 
-        public NodoLibro(Models.Libro libro)
+        public NodoLibro(Libro libro)
         {
             Valor = libro;
             Siguiente = null;
@@ -24,7 +24,7 @@ namespace Proyecto2.Estructuras
             Tamanio = 0;
         }
 
-        public void Insertar(Models.Libro nuevoLibro)
+        public void Insertar(Libro nuevoLibro)
         {
             NodoLibro nuevoNodo = new NodoLibro(nuevoLibro);
             if (Cabeza == null)
@@ -43,7 +43,7 @@ namespace Proyecto2.Estructuras
             Tamanio++;
         }
 
-        public Models.Libro BuscarPorIsbn(int isbn)
+        public Libro BuscarPorIsbn(int isbn)
         {
             NodoLibro actual = Cabeza;
             while (actual != null)
