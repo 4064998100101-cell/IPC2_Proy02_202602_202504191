@@ -1,15 +1,19 @@
-namespace Proyecto2
+namespace Proyecto2.Models
 {
-    // pendiente de enlazarlo con una lista para las categorias
+   
     public class NodoCategoria
     {
-    public string Nombre{get; private set;}
-  
-    public NodoCategoria(string nombre)
-        {
-            Nombre=nombre;
-        }
+        public string Nombre { get; set; }
+      
+        public Estructuras.Listacategorias SubCategorias { get; set; }
+        public Estructuras.ListaLibros LibrosAsociados { get; set; }
 
+        public NodoCategoria(string nombre)
+        {
+            Nombre = nombre;
+            SubCategorias = new Estructuras.Listacategorias();
+            LibrosAsociados = new Estructuras.ListaLibros();
+        }
     }
 
 }

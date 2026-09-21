@@ -1,33 +1,21 @@
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Proyecto2
+namespace Proyecto2.Models
 {
-    public class libro
+   public class Libro
     {
-        public string Titulo{ get; private set;}
-        public bool Estado {get; private set;}
-        public string Autor{get; private set;}
+        public int Isbn { get; set; }  
+        public string Titulo { get; set; }
+        public string Autor { get; set; }
+        public string CategoriaNombre { get; set; }
 
-        // seis digitos creados al azar
-        public int isbn{ get; private set;}
-        public string Categoria {get; private set;}
-
-        public  libro( string autor, string titulo, int codigounico, string categoria, bool estado=true)
+        public Libro(int isbn, string titulo, string autor, string categoriaNombre)
         {
-           Autor =autor;
-           Titulo=titulo; 
-           Estado=estado;
-           isbn=codigounico;
-           Categoria=categoria; 
+            Isbn = isbn;
+            Titulo = titulo;
+            Autor = autor;
+            CategoriaNombre = categoriaNombre;
         }
-
-        private string IBN()
-        {
-         return "mar";
-
-
-        }
-
     }
 }

@@ -1,55 +1,58 @@
-namespace Proyecto2
+namespace Proyecto2.Estructuras
 {
-    public class NodoLibro
+   public class NodoLibro
     {
-        public Models.libro Valor{get; private set;}
-        public NodoLibro Siguiente {get; private set;}
+        public Models.Libro Valor { get; set; }
+        public NodoLibro Siguiente { get; set; }
 
-        public NodoLibro(Models.libro libro)
+        public NodoLibro(Models.Libro libro)
         {
-            Valor =libro;
-            Siguiente= null;
+            Valor = libro;
+            Siguiente = null;
         }
+    
 
     }
     public class ListaLibros
     {
-        public NodoLibro Cabeza {get; private set;}
-        public int Tamaño {get; private set;}
+       public NodoLibro Cabeza { get; private set; }
+        public int Tamanio { get; private set; }
+
         public ListaLibros()
         {
-            Cabeza=null;
-            Tamaño=0;
+            Cabeza = null;
+            Tamanio = 0;
         }
-        public void Insertar (Models.Libro nuevoLibro)
+
+        public void Insertar(Models.Libro nuevoLibro)
         {
-            NodoLibro nuevoNodo=new NodoLibro(nuevoLibro);
-            if (Cabeza==null)
+            NodoLibro nuevoNodo = new NodoLibro(nuevoLibro);
+            if (Cabeza == null)
             {
-                Cabeza=nuevoLibro;
+                Cabeza = nuevoNodo;
             }
             else
             {
-                NodoLibro actual=Cabeza;
-                while (actual.Siguiente!= null)
+                NodoLibro actual = Cabeza;
+                while (actual.Siguiente != null)
                 {
-                    actual=actual.Siguiente;
+                    actual = actual.Siguiente;
                 }
-                actual.Siguiente=nuevoNodo;
+                actual.Siguiente = nuevoNodo;
             }
-            Tamaño ++;
+            Tamanio++;
         }
 
-        public Models.libro BuscarISBN(int isbn)
+        public Models.Libro BuscarPorIsbn(int isbn)
         {
-            NodoLibro actual=Cabeza;
-            while (actual!= null)
+            NodoLibro actual = Cabeza;
+            while (actual != null)
             {
-                if(actual.Valor.isbn==isbn)
+                if (actual.Valor.Isbn == isbn)
                 {
                     return actual.Valor;
                 }
-                actual=actual.Siguiente;
+                actual = actual.Siguiente;
             }
             return null;
         }

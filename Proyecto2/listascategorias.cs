@@ -1,9 +1,10 @@
-namespace Proyecto2
+namespace Proyecto2.Estructuras
 {
     public class Nodocat 
     {
-        public Models.NodoCategoria Valor {get; private set;}
-        public Nodocat Siguiente {get; set;}
+        public Models.NodoCategoria Valor { get; set; }
+        public Nodocat Siguiente { get; set; }
+
         public Nodocat(Models.NodoCategoria categoria)
         {
             Valor = categoria;
@@ -12,59 +13,57 @@ namespace Proyecto2
     }
     public class Listacategorias
     {
-        public Nodocat Cabeza{ get; private set;}
-        public int tamaño {get; private set;}
+       public Nodocat Cabeza { get; private set; }
+        public int Tamanio { get; private set; }
+
         public Listacategorias()
         {
-            Cabeza=null;
-            tamaño=0;
+            Cabeza = null;
+            Tamanio = 0;
         }
-        public void Insertar (Models.NodoCategoria nuevaCategoria)
+
+        public void Insertar(Models.NodoCategoria nuevaCategoria)
         {
-            Nodocat nuevonodo=new Nodocat(nuevaCategoria);
-            if (Cabeza==null)
+            Nodocat nuevoNodo = new Nodocat(nuevaCategoria);
+            if (Cabeza == null)
             {
-                Cabeza=nuevonodo;
+                Cabeza = nuevoNodo;
             }
             else
             {
-                if (string.Compare(nuevaCategoria.nombre, Cabeza.Valor.nombre, StringComparison.OrdinalIgnoreCase) < 0)
-
+                if (string.Compare(nuevaCategoria.Nombre, Cabeza.Valor.Nombre, StringComparison.OrdinalIgnoreCase) < 0)
                 {
-                nuevonodo.Siguiente=Cabeza;
-                Cabeza=nuevonodo;    
+                    nuevoNodo.Siguiente = Cabeza;
+                    Cabeza = nuevoNodo;
                 }
                 else
                 {
-                    Nodocat actual=Cabeza;
-                    while (actual.Siguiente!=null &&string.Compare(actual.Siguiente.Valor.nombre, nuevaCategoria.Nombre, StringComparison.OrdinalIgnoreCase) < 0)
+                    Nodocat actual = Cabeza;
+                    while (actual.Siguiente != null && 
+                           string.Compare(actual.Siguiente.Valor.Nombre, nuevaCategoria.Nombre, StringComparison.OrdinalIgnoreCase) < 0)
                     {
-                        actual=actual.Siguiente;
+                        actual = actual.Siguiente;
                     }
-                    nuevonodo.Siguiente=actual.Siguiente;
-                    actual.Siguiente=nuevonodo;
+                    nuevoNodo.Siguiente = actual.Siguiente;
+                    actual.Siguiente = nuevoNodo;
                 }
-                
-
             }
-            tamaño++;
+            Tamanio++;
         }
+
         public Models.NodoCategoria Buscar(string nombre)
         {
             Nodocat actual = Cabeza;
             while (actual != null)
             {
-                if (string.Equals(actual.Valor.Nombre,nombre, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(actual.Valor.Nombre, nombre, StringComparison.OrdinalIgnoreCase))
                 {
                     return actual.Valor;
                 }
-                var encontradaHijas=actual.Valor.SubCategorias.Buscar(nombre);
-                if (encontradaHijas!= null)
-                {
-                    return encontradaHijas;
-                    
-                }
-                actual=actual.Siguiente;
+                var encontradaEnHijas = actual.Valor.SubCategorias.Buscar(nombre);
+                if (encontradaEnHijas != null) return encontradaEnHijas;
+
+                actual = actual.Siguiente;
             }
             return null;
         }
