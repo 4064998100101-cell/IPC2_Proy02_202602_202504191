@@ -21,7 +21,6 @@ namespace Proyecto2
 
             if (config == null) return;
 
-            // Procesar Lista de Categorías (Opcional / Incremental)
             XElement listaCategorias = config.Element("listaCategorias");
             if (listaCategorias != null)
             {

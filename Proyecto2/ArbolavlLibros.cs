@@ -25,8 +25,9 @@ namespace Proyecto2
         }
         private int obtenerbalance(Nodoarbol nodo)
         {
-            return nodo=null ? 0: obteneraltura(nodo.izquierda)=obteneraltura(nodo.derecha);
+            return nodo == null ? 0 : obteneraltura(nodo.izquierda) - obteneraltura(nodo.derecha);
         }
+        
         private int Max(int a, int b)
         {
             return a>b? a:b;
@@ -62,7 +63,7 @@ namespace Proyecto2
             {
                 return new Nodoarbol(libro);
             }
-            if (libro.isbn<nodo.Valor.Isbn)
+            if (libro.Isbn<nodo.Valor.Isbn)
             {
                 nodo.izquierda=insertarRec(nodo.izquierda, libro);
             }
@@ -108,7 +109,7 @@ namespace Proyecto2
             {
                 return nodo.Valor;
             }
-            if (isbn<nodo.Valor.isbn)
+            if (isbn<nodo.Valor.Isbn)
             {
                 return BuscarRec(nodo.izquierda, isbn);
             }
@@ -131,25 +132,25 @@ namespace Proyecto2
             return sb.ToString();
         }
 
-        private void GenerarDotRec(NodoAvlLibro nodo, StringBuilder sb)
+        private void GenerarDotRec(Nodoarbol nodo, StringBuilder sb)
         {
             if (nodo == null) return;
 
             string idActual = $"isbn_{nodo.Valor.Isbn}";
             sb.AppendLine($"  {idActual} [label=\"ISBN: {nodo.Valor.Isbn}\\n{nodo.Valor.Titulo}\\nAutor: {nodo.Valor.Autor}\"];");
 
-            if (nodo.Izquierda != null)
+            if (nodo.izquierda != null)
             {
-                string idIzq = $"isbn_{nodo.Izquierda.Valor.Isbn}";
+                string idIzq = $"isbn_{nodo.izquierda.Valor.Isbn}";
                 sb.AppendLine($"  {idActual} -> {idIzq};");
-                GenerarDotRec(nodo.Izquierda, sb);
+                GenerarDotRec(nodo.izquierda, sb);
             }
 
-            if (nodo.Derecha != null)
+            if (nodo.derecha != null)
             {
-                string idDer = $"isbn_{nodo.Derecha.Valor.Isbn}";
+                string idDer = $"isbn_{nodo.derecha.Valor.Isbn}";
                 sb.AppendLine($"  {idActual} -> {idDer};");
-                GenerarDotRec(nodo.Derecha, sb);
+                GenerarDotRec(nodo.derecha, sb);
             }
         } 
     }
