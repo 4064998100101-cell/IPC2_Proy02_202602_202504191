@@ -1,8 +1,12 @@
+using Proyecto2;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddSingleton<Catalogo>();
+builder.Services.AddTransient<Xml>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

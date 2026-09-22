@@ -7,12 +7,13 @@ namespace Proyecto2
       
         public Listacategorias SubCategorias { get; set; }
         public ListaLibros LibrosAsociados { get; set; }
-
+        public ArbolAvlLibros Libroasociado {get; set;}
         public NodoCategoria(string nombre)
         {
             Nombre = nombre;
             SubCategorias = new Listacategorias();
             LibrosAsociados = new ListaLibros();
+            Libroasociado=new ArbolAvlLibros();
         }
     }
 
