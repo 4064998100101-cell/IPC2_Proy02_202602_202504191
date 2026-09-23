@@ -1,14 +1,14 @@
 digraph AVL {
   node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
   edge [fontname="Arial"];
-  label="Árbol AVL - Categoria: Sistemas\n";
+  label="Árbol AVL - Categoria: Programación y Algoritmos\n";
   labelloc="top";
   fontsize=16;
-  isbn_100010 [label="ISBN: 100010\nEL NEGRO\nAutor: Santiaguito"];
-  isbn_100010 -> isbn_100009;
-  isbn_100009 [label="ISBN: 100009\nAmerica\nAutor: Prondo"];
-  isbn_100009 -> isbn_100002;
-  isbn_100002 [label="ISBN: 100002\nEstructuras de Datos\nAutor: Luis Joyanes"];
-  isbn_100010 -> isbn_200045;
-  isbn_200045 [label="ISBN: 200045\nPerrito\nAutor: Bebirs"];
+  isbn_100045 [label="ISBN: 100045\nClean Code\nAutor: Robert C. Martin"];
+  isbn_100045 -> isbn_100012;
+  isbn_100012 [label="ISBN: 100012\nThe Pragmatic Programmer\nAutor: Andrew Hunt"];
+  isbn_100045 -> isbn_100089;
+  isbn_100089 [label="ISBN: 100089\nDesign Patterns\nAutor: Erich Gamma"];
+  isbn_100089 -> isbn_100088;
+  isbn_100088 [label="ISBN: 100088\nDesign Patterns\nAutor: E Gamma"];
 }

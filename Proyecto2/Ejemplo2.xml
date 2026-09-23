@@ -39,9 +39,9 @@
             <categoria>Programación y Algoritmos</categoria>
         </libro>
         <libro>
-            <ISBN>100089</ISBN>
+            <ISBN>100088</ISBN>
             <titulo>Design Patterns</titulo>
-            <autor>Erich Gamma</autor>
+            <autor>E Gamma</autor>
             <categoria>Programación y Algoritmos</categoria>
         </libro>
 
