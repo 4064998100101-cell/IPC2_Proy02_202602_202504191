@@ -1,6 +1,6 @@
 namespace Proyecto2
 {
-   public class NodoLibro
+    public class NodoLibro
     {
         public Libro Valor { get; set; }
         public NodoLibro Siguiente { get; set; }
@@ -10,12 +10,11 @@ namespace Proyecto2
             Valor = libro;
             Siguiente = null;
         }
-    
-
     }
+
     public class ListaLibros
     {
-       public NodoLibro Cabeza { get; private set; }
+        public NodoLibro Cabeza { get; private set; }
         public int Tamanio { get; private set; }
 
         public ListaLibros()
@@ -56,6 +55,37 @@ namespace Proyecto2
             }
             return null;
         }
+
+        public Libro ObtenerMenorIsbn()
+        {
+            if (Cabeza == null) return null;
+            NodoLibro actual = Cabeza;
+            Libro menor = actual.Valor;
+            while (actual != null)
+            {
+                if (actual.Valor.Isbn < menor.Isbn)
+                {
+                    menor = actual.Valor;
+                }
+                actual = actual.Siguiente;
+            }
+            return menor;
+        }
+
+        public Libro ObtenerMayorIsbn()
+        {
+            if (Cabeza == null) return null;
+            NodoLibro actual = Cabeza;
+            Libro mayor = actual.Valor;
+            while (actual != null)
+            {
+                if (actual.Valor.Isbn > mayor.Isbn)
+                {
+                    mayor = actual.Valor;
+                }
+                actual = actual.Siguiente;
+            }
+            return mayor;
+        }
     }
-    
 }

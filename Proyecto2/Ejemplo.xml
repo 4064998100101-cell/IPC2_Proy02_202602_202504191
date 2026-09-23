@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <listaCategorias>
+        <!-- Categoría Principal -->
+        <categoria>Carlitos</categoria>
+        
+        <!-- Subcategorías con atributo 'padre' -->
+        <categoria padre="Ingeniería">Sistemas</categoria>
+        <categoria padre="Ingeniería">Industrial</categoria>
+        <categoria padre="Sistemas">Programación</categoria>
+    </listaCategorias>
+
+    <listaLibros>
+        <libro>
+            <ISBN>100001</ISBN>
+            <titulo>Clean Code</titulo>
+            <autor>Robert C. Martin</autor>
+            <categoria>Programación</categoria>
+        </libro>
+        <libro>
+            <ISBN>100002</ISBN>
+            <titulo>Estructuras de Datos</titulo>
+            <autor>Luis Joyanes</autor>
+            <categoria>Sistemas</categoria>
+        </libro>
+        <libro>
+            <ISBN>100003</ISBN>
+            <titulo>Ingeniería de Software</titulo>
+            <autor>Ian Sommerville</autor>
+            <categoria>Ingeniería</categoria>
+        </libro>
+    </listaLibros>
+</config>
