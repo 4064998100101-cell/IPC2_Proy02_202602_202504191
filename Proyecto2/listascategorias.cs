@@ -1,3 +1,6 @@
+using System;
+using System.Text;
+
 namespace Proyecto2
 {
     public class Nodocat 
@@ -11,9 +14,10 @@ namespace Proyecto2
             Siguiente = null;
         }
     }
+
     public class Listacategorias
     {
-       public Nodocat Cabeza { get; private set; }
+        public Nodocat Cabeza { get; private set; }
         public int Tamanio { get; private set; }
 
         public Listacategorias()
@@ -66,6 +70,51 @@ namespace Proyecto2
                 actual = actual.Siguiente;
             }
             return null;
+        }
+
+        // --- MÉTODOS DE GRAPHVIZ INTEGRADOS CORRECTAMENTE ---
+
+        public string GenerarDotCategorias()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("digraph Categorias {");
+            sb.AppendLine("   node [shape=folder, style=\"rounded,filled\", fillcolor=\"#fff3cd\", fontname=\"Arial\"];");
+            sb.AppendLine("   edge [fontname=\"Arial\"];");
+            sb.AppendLine("   label=\"Jerarquía de Categorías y Subcategorías\\n\";");
+            sb.AppendLine("   labelloc=\"top\";");
+            sb.AppendLine("   fontsize=16;");
+
+            // Recorremos la lista de categorías principales de forma segura
+            Nodocat actual = Cabeza;
+            while (actual != null)
+            {
+                GenerarDotCategoriasRec(actual.Valor, sb);
+                actual = actual.Siguiente;
+            }
+
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        private void GenerarDotCategoriasRec(NodoCategoria nodo, StringBuilder sb)
+        {
+            if (nodo == null) return;
+
+            string idActual = $"cat_{nodo.Nombre.Replace(" ", "_")}";
+            sb.AppendLine($"   {idActual} [label=\"{nodo.Nombre}\"];");
+
+            // Si tiene subcategorías, las recorremos y enlazamos
+            if (nodo.SubCategorias != null && nodo.SubCategorias.Cabeza != null)
+            {
+                Nodocat actualSub = nodo.SubCategorias.Cabeza;
+                while (actualSub != null)
+                {
+                    string idSub = $"cat_{actualSub.Valor.Nombre.Replace(" ", "_")}";
+                    sb.AppendLine($"   {idActual} -> {idSub};");
+                    GenerarDotCategoriasRec(actualSub.Valor, sb);
+                    actualSub = actualSub.Siguiente;
+                }
+            }
         }
     }
 }

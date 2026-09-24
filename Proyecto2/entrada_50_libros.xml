@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<config>
+  <listaCategorias>
+    <categoria>Tecnologia</categoria>
+    <categoria padre="Tecnologia">Programacion</categoria>
+    <categoria padre="Tecnologia">Bases de Datos</categoria>
+    <categoria>Ciencia</categoria>
+    <categoria padre="Ciencia">Matematicas</categoria>
+    <categoria padre="Ciencia">Fisica</categoria>
+    <categoria>Literatura</categoria>
+  </listaCategorias>
+  <listaLibros>
+    <libro>
+      <ISBN>1001</ISBN>
+      <titulo>Libro 01 - Tecnologia</titulo>
+      <autor>Autor A</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1002</ISBN>
+      <titulo>Libro 02 - Tecnologia</titulo>
+      <autor>Autor B</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1003</ISBN>
+      <titulo>Libro 03 - Tecnologia</titulo>
+      <autor>Autor C</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1004</ISBN>
+      <titulo>Libro 04 - Tecnologia</titulo>
+      <autor>Autor D</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1005</ISBN>
+      <titulo>Libro 05 - Tecnologia</titulo>
+      <autor>Autor E</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1006</ISBN>
+      <titulo>Libro 06 - Tecnologia</titulo>
+      <autor>Autor F</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1007</ISBN>
+      <titulo>Libro 07 - Tecnologia</titulo>
+      <autor>Autor G</autor>
+      <categoria>Tecnologia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1008</ISBN>
+      <titulo>Libro 08 - Programacion</titulo>
+      <autor>Autor H</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1009</ISBN>
+      <titulo>Libro 09 - Programacion</titulo>
+      <autor>Autor I</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1010</ISBN>
+      <titulo>Libro 10 - Programacion</titulo>
+      <autor>Autor J</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1011</ISBN>
+      <titulo>Libro 11 - Programacion</titulo>
+      <autor>Autor A</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1012</ISBN>
+      <titulo>Libro 12 - Programacion</titulo>
+      <autor>Autor B</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1013</ISBN>
+      <titulo>Libro 13 - Programacion</titulo>
+      <autor>Autor C</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1014</ISBN>
+      <titulo>Libro 14 - Programacion</titulo>
+      <autor>Autor D</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1015</ISBN>
+      <titulo>Libro 15 - Programacion</titulo>
+      <autor>Autor E</autor>
+      <categoria>Programacion</categoria>
+    </libro>
+    <libro>
+      <ISBN>1016</ISBN>
+      <titulo>Libro 16 - Bases de Datos</titulo>
+      <autor>Autor F</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1017</ISBN>
+      <titulo>Libro 17 - Bases de Datos</titulo>
+      <autor>Autor G</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1018</ISBN>
+      <titulo>Libro 18 - Bases de Datos</titulo>
+      <autor>Autor H</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1019</ISBN>
+      <titulo>Libro 19 - Bases de Datos</titulo>
+      <autor>Autor I</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1020</ISBN>
+      <titulo>Libro 20 - Bases de Datos</titulo>
+      <autor>Autor J</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1021</ISBN>
+      <titulo>Libro 21 - Bases de Datos</titulo>
+      <autor>Autor A</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1022</ISBN>
+      <titulo>Libro 22 - Bases de Datos</titulo>
+      <autor>Autor B</autor>
+      <categoria>Bases de Datos</categoria>
+    </libro>
+    <libro>
+      <ISBN>1023</ISBN>
+      <titulo>Libro 23 - Ciencia</titulo>
+      <autor>Autor C</autor>
+      <categoria>Ciencia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1024</ISBN>
+      <titulo>Libro 24 - Ciencia</titulo>
+      <autor>Autor D</autor>
+      <categoria>Ciencia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1025</ISBN>
+      <titulo>Libro 25 - Ciencia</titulo>
+      <autor>Autor E</autor>
+      <categoria>Ciencia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1026</ISBN>
+      <titulo>Libro 26 - Ciencia</titulo>
+      <autor>Autor F</autor>
+      <categoria>Ciencia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1027</ISBN>
+      <titulo>Libro 27 - Ciencia</titulo>
+      <autor>Autor G</autor>
+      <categoria>Ciencia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1028</ISBN>
+      <titulo>Libro 28 - Ciencia</titulo>
+      <autor>Autor H</autor>
+      <categoria>Ciencia</categoria>
+    </libro>
+    <libro>
+      <ISBN>1029</ISBN>
+      <titulo>Libro 29 - Matematicas</titulo>
+      <autor>Autor I</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1030</ISBN>
+      <titulo>Libro 30 - Matematicas</titulo>
+      <autor>Autor J</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1031</ISBN>
+      <titulo>Libro 31 - Matematicas</titulo>
+      <autor>Autor A</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1032</ISBN>
+      <titulo>Libro 32 - Matematicas</titulo>
+      <autor>Autor B</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1033</ISBN>
+      <titulo>Libro 33 - Matematicas</titulo>
+      <autor>Autor C</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1034</ISBN>
+      <titulo>Libro 34 - Matematicas</titulo>
+      <autor>Autor D</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1035</ISBN>
+      <titulo>Libro 35 - Matematicas</titulo>
+      <autor>Autor E</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1036</ISBN>
+      <titulo>Libro 36 - Matematicas</titulo>
+      <autor>Autor F</autor>
+      <categoria>Matematicas</categoria>
+    </libro>
+    <libro>
+      <ISBN>1037</ISBN>
+      <titulo>Libro 37 - Fisica</titulo>
+      <autor>Autor G</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1038</ISBN>
+      <titulo>Libro 38 - Fisica</titulo>
+      <autor>Autor H</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1039</ISBN>
+      <titulo>Libro 39 - Fisica</titulo>
+      <autor>Autor I</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1040</ISBN>
+      <titulo>Libro 40 - Fisica</titulo>
+      <autor>Autor J</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1041</ISBN>
+      <titulo>Libro 41 - Fisica</titulo>
+      <autor>Autor A</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1042</ISBN>
+      <titulo>Libro 42 - Fisica</titulo>
+      <autor>Autor B</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1043</ISBN>
+      <titulo>Libro 43 - Fisica</titulo>
+      <autor>Autor C</autor>
+      <categoria>Fisica</categoria>
+    </libro>
+    <libro>
+      <ISBN>1044</ISBN>
+      <titulo>Libro 44 - Literatura</titulo>
+      <autor>Autor D</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+    <libro>
+      <ISBN>1045</ISBN>
+      <titulo>Libro 45 - Literatura</titulo>
+      <autor>Autor E</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+    <libro>
+      <ISBN>1046</ISBN>
+      <titulo>Libro 46 - Literatura</titulo>
+      <autor>Autor F</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+    <libro>
+      <ISBN>1047</ISBN>
+      <titulo>Libro 47 - Literatura</titulo>
+      <autor>Autor G</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+    <libro>
+      <ISBN>1048</ISBN>
+      <titulo>Libro 48 - Literatura</titulo>
+      <autor>Autor H</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+    <libro>
+      <ISBN>1049</ISBN>
+      <titulo>Libro 49 - Literatura</titulo>
+      <autor>Autor I</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+    <libro>
+      <ISBN>1050</ISBN>
+      <titulo>Libro 50 - Literatura</titulo>
+      <autor>Autor J</autor>
+      <categoria>Literatura</categoria>
+    </libro>
+  </listaLibros>
+</config>

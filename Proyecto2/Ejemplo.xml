@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <listaCategorias>
+        <!-- Categorías Principales -->
+        <categoria>Ingeniería</categoria>
+        <categoria>Ciencias Básicas</categoria>
+        <categoria>Literatura</categoria>
+        
+        <!-- Subcategorías de Ingeniería -->
+        <categoria padre="Ingeniería">Sistemas y Computación</categoria>
+        <categoria padre="Ingeniería">Industrial</categoria>
+        
+        <!-- Subcategorías anidadas bajo Sistemas y Computación -->
+        <categoria padre="Sistemas y Computación">Programación y Algoritmos</categoria>
+        <categoria padre="Sistemas y Computación">Estructuras de Datos</categoria>
+        <categoria padre="Sistemas y Computación">Bases de Datos</categoria>
+
+        <!-- Subcategorías de Ciencias Básicas -->
+        <categoria padre="Ciencias Básicas">Matemática Pura</categoria>
+        <categoria padre="Ciencias Básicas">Física Aplicada</categoria>
+        
+        <!-- Subcategorías anidadas bajo Matemática Pura -->
+        <categoria padre="Matemática Pura">Matemática Computacional</categoria>
+        <categoria padre="Matemática Pura">Estadística y Probabilidad</categoria>
+    </listaCategorias>
+
+    <listaLibros>
+        <!-- Libros de Programación y Algoritmos -->
+        <libro>
+            <ISBN>100045</ISBN>
+            <titulo>Clean Code</titulo>
+            <autor>Robert C. Martin</autor>
+            <categoria>Programación y Algoritmos</categoria>
+        </libro>
+        <libro>
+            <ISBN>100012</ISBN>
+            <titulo>The Pragmatic Programmer</titulo>
+            <autor>Andrew Hunt</autor>
+            <categoria>Programación y Algoritmos</categoria>
+        </libro>
+        <libro>
+            <ISBN>100089</ISBN>
+            <titulo>Design Patterns</titulo>
+            <autor>Erich Gamma</autor>
+            <categoria>Programación y Algoritmos</categoria>
+        </libro>
+
+        <!-- Libros de Estructuras de Datos -->
+        <libro>
+            <ISBN>200501</ISBN>
+            <titulo>Estructuras de Datos en C#</titulo>
+            <autor>Luis Joyanes</autor>
+            <categoria>Estructuras de Datos</categoria>
+        </libro>
+        <libro>
+            <ISBN>200150</ISBN>
+            <titulo>Introduction to Algorithms</titulo>
+            <autor>Thomas H. Cormen</autor>
+            <categoria>Estructuras de Datos</categoria>
+        </libro>
+
+        <!-- Libros de Bases de Datos -->
+        <libro>
+            <ISBN>300333</ISBN>
+            <titulo>Database System Concepts</titulo>
+            <autor>Abraham Silberschatz</autor>
+            <categoria>Bases de Datos</categoria>
+        </libro>
+
+        <!-- Libros de Matemática Computacional -->
+        <libro>
+            <ISBN>400782</ISBN>
+            <titulo>Matemáticas Discretas y sus Aplicaciones</titulo>
+            <autor>Kenneth H. Rosen</autor>
+            <categoria>Matemática Computacional</categoria>
+        </libro>
+        <libro>
+            <ISBN>400105</ISBN>
+            <titulo>Numerical Analysis</titulo>
+            <autor>Richard L. Burden</autor>
+            <categoria>Matemática Computacional</categoria>
+        </libro>
+
+        <!-- Libros de Física Aplicada -->
+        <libro>
+            <ISBN>500999</ISBN>
+            <titulo>Física Universitaria Vol. 2</titulo>
+            <autor>Sears and Zemansky</autor>
+            <categoria>Física Aplicada</categoria>
+        </libro>
+    </listaLibros>
+</config>

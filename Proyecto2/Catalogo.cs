@@ -1,11 +1,8 @@
-
 namespace Proyecto2
 {
- public class Catalogo
-
+    public class Catalogo
     {
-        
-       public Listacategorias RaizCategorias { get; private set; }
+        public Listacategorias RaizCategorias { get; private set; }
         public ListaLibros TodosLosLibrosGlobal { get; private set; }
 
         public Catalogo()
@@ -16,6 +13,8 @@ namespace Proyecto2
 
         public NodoCategoria ObtenerOCrearCategoria(string nombreCategoria, string nombrePadre)
         {
+            if (string.IsNullOrWhiteSpace(nombreCategoria)) return null;
+            
             nombreCategoria = nombreCategoria.Trim();
             NodoCategoria encontrada = RaizCategorias.Buscar(nombreCategoria);
             if (encontrada != null) return encontrada;
@@ -47,9 +46,14 @@ namespace Proyecto2
 
         public void RegistrarLibro(int isbn, string titulo, string autor, string nombreCategoria)
         {
+            if (string.IsNullOrWhiteSpace(nombreCategoria)) return;
+
             Libro nuevoLibro = new Libro(isbn, titulo, autor, nombreCategoria);
+            
+            // Insertar en la lista global
             TodosLosLibrosGlobal.Insertar(nuevoLibro);
 
+            // Buscar o crear la categoría y asociar el libro
             NodoCategoria cat = RaizCategorias.Buscar(nombreCategoria);
             if (cat != null)
             {
@@ -61,6 +65,5 @@ namespace Proyecto2
                 nuevaCat.LibrosAsociados.Insertar(nuevoLibro);
             }
         }
-
-    }   
+    }
 }
