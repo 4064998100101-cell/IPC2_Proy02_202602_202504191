@@ -5,7 +5,7 @@ namespace Proyecto2
 {
     public class Nodoarbol
     {
-        public Libro Valor { get; private set; }
+        public Libro Valor { get;  set; }
         public Nodoarbol izquierda { get; set; }
         public Nodoarbol derecha { get; set; }
         public int Altura { get; set; }
@@ -187,5 +187,89 @@ namespace Proyecto2
                 GenerarDotRec(nodo.derecha, sb);
             }
         }
-    }
+        // metodos para eliminar nuevos valores
+        public void Eliminar(int isbn)
+        {
+            Raiz = eliminarR(Raiz,isbn);
+        }
+        private Nodoarbol eliminarR(Nodoarbol Raiz, int isbn)
+        {
+            if (Raiz== null)
+            
+            {
+             return null;   
+            }
+            if(isbn< Raiz.Valor.Isbn)
+            {
+                Raiz.izquierda=eliminarR(Raiz.izquierda, isbn);
+            }
+            else if(isbn> Raiz.Valor.Isbn)
+            {
+                Raiz.derecha=eliminarR(Raiz.derecha, isbn);
+            }
+            else
+            {
+                if ((Raiz.izquierda==null)|| Raiz.derecha==null)
+                {
+                    Nodoarbol temp=Raiz.izquierda ?? Raiz.derecha;
+                    if(temp==null)
+                    {
+                        temp=Raiz;
+                        Raiz=null;
+                    }
+                    else
+                    {
+                        Raiz=temp;
+                    }
+                }
+                else
+                {
+                    Nodoarbol temp= obtenerMinimo(Raiz.derecha);
+
+                    Raiz.Valor=temp.Valor;
+                    Raiz.derecha=eliminarR(Raiz.derecha, temp.Valor.Isbn);
+                }
+            }
+            if (Raiz==null)
+            {
+                return null;
+            }
+            Raiz.Altura=1+Max(obteneraltura(Raiz.izquierda), obteneraltura(Raiz.derecha));
+
+            int balance =obtenerbalance(Raiz);
+            // Vamos a balancear tras eliminar o sino valio
+            
+            if (balance>1 && obtenerbalance(Raiz.izquierda)>=0)
+            {
+                return RotarDerecha(Raiz);
+            }
+            if(balance<-1 && obteneraltura(Raiz.izquierda)<0)
+            {
+                Raiz.izquierda=RotarIzquierda(Raiz.izquierda);
+                return RotarDerecha(Raiz);
+            }
+            if (balance <-1 && obtenerbalance(Raiz.derecha)<=0)
+            {
+                return RotarIzquierda(Raiz);
+            }
+            if (balance <-1 && obtenerbalance(Raiz.derecha)>0)
+            {
+                Raiz.derecha=RotarDerecha(Raiz.derecha);
+                return RotarIzquierda(Raiz);
+            }
+          return Raiz;
+        }
+
+        private Nodoarbol obtenerMinimo(Nodoarbol nodo)
+        {
+            Nodoarbol actual=nodo;
+            while(actual.izquierda != null)
+            {
+                actual=actual.izquierda;
+                
+            }
+            return actual;
+        }
+
+    } 
 }
