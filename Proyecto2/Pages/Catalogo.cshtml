@@ -101,32 +101,34 @@
             }
         </div>
 
-        <!-- SECCIÓN 3: GESTIÓN DE LIBROS (REGISTRO Y ELIMINACIÓN) -->
-        <div class="tab-pane fade" id="libSection" role="tabpanel">
-            <div class="row">
-                <!-- Registro -->
-                <div class="col-md-6 border-end pe-4">
-                    <h3 class="mb-3">Registrar Libro</h3>
-                    <form method="post" asp-page-handler="RegistrarLibro">
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">ISBN (6 dígitos)</label>
-                            <input type="number" class="form-control" name="Isbn" min="100000" max="999999" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Título</label>
-                            <input type="text" class="form-control" name="Titulo" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Autor</label>
-                            <input type="text" class="form-control" name="Autor" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Categoría</label>
-                            <input type="text" class="form-control" name="CategoriaNombre" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
-                    </form>
+
+<!-- SECCIÓN 3: GESTIÓN DE LIBROS (REGISTRO Y ELIMINACIÓN) -->
+<div class="tab-pane fade" id="libSection" role="tabpanel">
+    <div class="row">
+        <!-- Registro -->
+        <div class="col-md-6 border-end pe-4">
+            <h3 class="mb-3">Registrar Libro</h3>
+            <form method="post" asp-page-handler="RegistrarLibro">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">ISBN (Sin límite de dígitos)</label>
+                    <input type="number" class="form-control" name="Isbn" required />
                 </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Título</label>
+                    <input type="text" class="form-control" name="Titulo" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Autor</label>
+                    <input type="text" class="form-control" name="Autor" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Categoría</label>
+                    <input type="text" class="form-control" name="CategoriaNombre" required />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Registrar</button>
+            </form>
+        </div>
+        <!-- Resto del código... -->
 
                 <!-- Eliminación y Consultas Globales (Árbol Binario) -->
                 <div class="col-md-6 ps-4">
