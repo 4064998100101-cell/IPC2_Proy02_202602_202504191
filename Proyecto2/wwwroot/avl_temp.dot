@@ -1,20 +1,18 @@
 digraph AVL {
    node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
    edge [fontname="Arial"];
-   label="Árbol AVL - Categoria: Tecnologia\n";
+   label="Árbol AVL - Categoria: Literatura\n";
    labelloc="top";
    fontsize=16;
-   isbn_1004 [label="ISBN: 1004\nLibro 04 - Tecnologia\nAutor: Autor D"];
-   isbn_1004 -> isbn_1002;
-   isbn_1002 [label="ISBN: 1002\nLibro 02 - Tecnologia\nAutor: Autor B"];
-   isbn_1002 -> isbn_1001;
-   isbn_1001 [label="ISBN: 1001\nLibro 01 - Tecnologia\nAutor: Autor A"];
-   isbn_1002 -> isbn_1003;
-   isbn_1003 [label="ISBN: 1003\nLibro 03 - Tecnologia\nAutor: Autor C"];
-   isbn_1004 -> isbn_1006;
-   isbn_1006 [label="ISBN: 1006\nLibro 06 - Tecnologia\nAutor: Autor F"];
-   isbn_1006 -> isbn_1005;
-   isbn_1005 [label="ISBN: 1005\nLibro 05 - Tecnologia\nAutor: Autor E"];
-   isbn_1006 -> isbn_1007;
-   isbn_1007 [label="ISBN: 1007\nLibro 07 - Tecnologia\nAutor: Autor G"];
+   isbn_1047 [label="ISBN: 1047\nLibro 47 - Literatura\nAutor: Autor G"];
+   isbn_1047 -> isbn_1045;
+   isbn_1045 [label="ISBN: 1045\nLibro 45 - Literatura\nAutor: Autor E"];
+   isbn_1045 -> isbn_1044;
+   isbn_1044 [label="ISBN: 1044\nLibro 44 - Literatura\nAutor: Autor D"];
+   isbn_1047 -> isbn_1049;
+   isbn_1049 [label="ISBN: 1049\nLibro 49 - Literatura\nAutor: Autor I"];
+   isbn_1049 -> isbn_1048;
+   isbn_1048 [label="ISBN: 1048\nLibro 48 - Literatura\nAutor: Autor H"];
+   isbn_1049 -> isbn_1050;
+   isbn_1050 [label="ISBN: 1050\nLibro 50 - Literatura\nAutor: Autor J"];
 }

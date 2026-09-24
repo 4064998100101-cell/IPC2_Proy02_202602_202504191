@@ -1,0 +1,19 @@
+digraph Categorias {
+   node [shape=folder, style="rounded,filled", fillcolor="#fff3cd", fontname="Arial"];
+   edge [fontname="Arial"];
+   label="Jerarquía de Categorías y Subcategorías\n";
+   labelloc="top";
+   fontsize=16;
+   cat_CACA [label="CACA"];
+   cat_Ciencia [label="Ciencia"];
+   cat_Ciencia -> cat_Fisica;
+   cat_Fisica [label="Fisica"];
+   cat_Ciencia -> cat_Matematicas;
+   cat_Matematicas [label="Matematicas"];
+   cat_Literatura [label="Literatura"];
+   cat_Tecnologia [label="Tecnologia"];
+   cat_Tecnologia -> cat_Bases_de_Datos;
+   cat_Bases_de_Datos [label="Bases de Datos"];
+   cat_Tecnologia -> cat_Programacion;
+   cat_Programacion [label="Programacion"];
+}

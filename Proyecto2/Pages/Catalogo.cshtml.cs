@@ -29,65 +29,50 @@ namespace Proyecto2.Pages
         [BindProperty] public string CategoriaNombre { get; set; }
 
         [BindProperty] public int IsbnBuscado { get; set; }
-        [BindProperty] public int IsbnAEliminar {get; set;}
-        [BindProperty] public string CategoriaParaEliminar{get; set;}
+        [BindProperty] public int IsbnAEliminar { get; set; }
+        [BindProperty] public string CategoriaParaEliminar { get; set; }
         
         // Resultados para mostrar en la vista
         public Libro LibroEncontrado { get; set; }
         public string ResultadoExtremo { get; set; }
         public string Mensaje { get; set; }
         public string RutaImagenAvl { get; set; }
+        public string RutaImagenCategorias { get; set; }
+        public string LibrosOrdenadosHtml { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string CategoriaSeleccionada { get; set; }
 
         public void OnGet()
         {
-            // Generar gráfico AVL si se seleccionó una categoría
-            if (!string.IsNullOrEmpty(CategoriaSeleccionada))
+            GenerarReportesVisuales();
+        }
+
+        private void CompilarGraphviz(string dotPath, string imgPath)
+        {
+            try
             {
-                var cat = _catalogo.RaizCategorias.Buscar(CategoriaSeleccionada);
-                if (cat != null)
+                var startInfo = new ProcessStartInfo
                 {
-                    string dotContent = cat.LibrosAsociados.GenerarDot(cat.Nombre);
-                    string wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-                    if (!Directory.Exists(wwwRootPath)) Directory.CreateDirectory(wwwRootPath);
+                    FileName = "dot",
+                    Arguments = $"-Tpng \"{dotPath}\" -o \"{imgPath}\"",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
 
-                    string dotPath = Path.Combine(wwwRootPath, "avl_temp.dot");
-                    string imgPath = Path.Combine(wwwRootPath, "avl_temp.png");
-
-                    System.IO.File.WriteAllText(dotPath, dotContent);
-
-                    try
-                    {
-                        var startInfo = new ProcessStartInfo
-                        {
-                            FileName = "dot",
-                            Arguments = $"-Tpng \"{dotPath}\" -o \"{imgPath}\"",
-                            RedirectStandardOutput = true,
-                            UseShellExecute = false,
-                            CreateNoWindow = true
-                        };
-
-                        using (var proc = Process.Start(startInfo))
-                        {
-                            proc?.WaitForExit();
-                        }
-                        RutaImagenAvl = "/avl_temp.png";
-                    }
-                    catch
-                    {
-                        Mensaje = "Error al compilar Graphviz. Asegúrese de tenerlo instalado y agregado al PATH del sistema.";
-                    }
-                }
-                else
+                using (var proc = Process.Start(startInfo))
                 {
-                    Mensaje = $"No se encontró la categoría '{CategoriaSeleccionada}'.";
+                    proc?.WaitForExit();
                 }
+            }
+            catch
+            {
+                // Graphviz no disponible o error en PATH
             }
         }
 
-        // Opción 1: Cargar Archivo XML de configuración incremental
+        // Opción 1: Cargar Archivo XML
         public async Task<IActionResult> OnPostCargarXmlAsync()
         {
             if (ArchivoXml != null && ArchivoXml.Length > 0)
@@ -101,7 +86,11 @@ namespace Proyecto2.Pages
                     }
                     _xmlService.ProcesarArchivoXml(rutaTemporal);
                     if (System.IO.File.Exists(rutaTemporal)) System.IO.File.Delete(rutaTemporal);
-                    Mensaje = "¡Archivo XML procesado e integrado exitosamente en las estructuras!";
+                    
+                    Mensaje = "¡Archivo XML procesado e integrado exitosamente!";
+                    
+                    // Generar los reportes visuales inmediatamente después de procesar el XML
+                    GenerarReportesVisuales();
                 }
                 catch (Exception ex)
                 {
@@ -115,24 +104,26 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Opción 2: Gestión de Categorías (Agregar nueva categoría / Subcategoría)
+        // Opción 2: Gestión de Categorías
         public IActionResult OnPostAgregarCategoria()
         {
             if (!string.IsNullOrEmpty(NuevaCategoria))
             {
                 _catalogo.ObtenerOCrearCategoria(NuevaCategoria, CategoriaPadre);
                 Mensaje = $"Categoría '{NuevaCategoria}' agregada o enlazada correctamente.";
+                GenerarReportesVisuales();
             }
             return Page();
         }
 
-        // Opción 3: Gestión de Libros (Registrar nuevo libro en el AVL correspondiente)
+        // Opción 3: Registro de Libros
         public IActionResult OnPostRegistrarLibro()
         {
             if (Isbn > 0 && !string.IsNullOrEmpty(Titulo) && !string.IsNullOrEmpty(CategoriaNombre))
             {
                 _catalogo.RegistrarLibro(Isbn, Titulo, Autor, CategoriaNombre);
-                Mensaje = $"Libro con ISBN {Isbn} registrado exitosamente en el Árbol AVL de '{CategoriaNombre}'.";
+                Mensaje = $"Libro con ISBN {Isbn} registrado exitosamente.";
+                GenerarReportesVisuales();
             }
             else
             {
@@ -141,8 +132,8 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // OPCION ELIMINAR 
-       public IActionResult OnPostEliminarLibro()
+        // Opción: Eliminar Libro
+        public IActionResult OnPostEliminarLibro()
         {
             if (IsbnAEliminar > 0 && !string.IsNullOrEmpty(CategoriaParaEliminar))
             {
@@ -151,6 +142,7 @@ namespace Proyecto2.Pages
                 {
                     cat.LibrosAsociados.Eliminar(IsbnAEliminar);
                     Mensaje = $"Libro con ISBN {IsbnAEliminar} eliminado de la categoría '{CategoriaParaEliminar}'.";
+                    GenerarReportesVisuales();
                 }
                 else
                 {
@@ -164,7 +156,7 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Opción 4: Buscar libro por ISBN
+        // Opción 4: Buscar libro por ISBN (Árbol Binario Global)
         public IActionResult OnPostBuscarIsbn()
         {
             LibroEncontrado = _catalogo.TodosLosLibrosGlobal.BuscarPorIsbn(IsbnBuscado);
@@ -172,10 +164,11 @@ namespace Proyecto2.Pages
             {
                 Mensaje = $"No se encontró ningún libro registrado con el ISBN {IsbnBuscado}.";
             }
+            GenerarReportesVisuales();
             return Page();
         }
 
-        // Opción 5: Mostrar Libro con menor o mayor ISBN
+        // Opción 5: Mostrar Libro con menor o mayor ISBN (Árbol Binario Global)
         public IActionResult OnPostMenorMayorIsbn(string accion)
         {
             if (accion == "menor")
@@ -192,7 +185,45 @@ namespace Proyecto2.Pages
                     ? $"Mayor ISBN -> ISBN: {libroMayor.Isbn} | Título: {libroMayor.Titulo} | Autor: {libroMayor.Autor}"
                     : "No hay libros registrados en el catálogo global.";
             }
+            GenerarReportesVisuales();
             return Page();
+        }
+
+        // Método auxiliar para centralizar la generación de imágenes con Graphviz
+        private void GenerarReportesVisuales()
+        {
+            string wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            if (!Directory.Exists(wwwRootPath)) Directory.CreateDirectory(wwwRootPath);
+
+            // 1. Generar gráfico AVL si se seleccionó una categoría
+            if (!string.IsNullOrEmpty(CategoriaSeleccionada))
+            {
+                var cat = _catalogo.RaizCategorias.Buscar(CategoriaSeleccionada);
+                if (cat != null)
+                {
+                    string dotContent = cat.LibrosAsociados.GenerarDot(cat.Nombre);
+                    string dotPath = Path.Combine(wwwRootPath, "avl_temp.dot");
+                    string imgPath = Path.Combine(wwwRootPath, "avl_temp.png");
+
+                    System.IO.File.WriteAllText(dotPath, dotContent);
+                    CompilarGraphviz(dotPath, imgPath);
+                    RutaImagenAvl = "/avl_temp.png";
+
+                    LibrosOrdenadosHtml = cat.LibrosAsociados.ObtenerLibrosOrdenadosInOrder();
+                }
+            }
+
+            // 2. Generar gráfico general de la jerarquía de categorías
+            if (_catalogo.RaizCategorias.Cabeza != null)
+            {
+                string dotCatContent = _catalogo.RaizCategorias.GenerarDotCategorias();
+                string dotCatPath = Path.Combine(wwwRootPath, "cat_temp.dot");
+                string imgCatPath = Path.Combine(wwwRootPath, "cat_temp.png");
+
+                System.IO.File.WriteAllText(dotCatPath, dotCatContent);
+                CompilarGraphviz(dotCatPath, imgCatPath);
+                RutaImagenCategorias = "/cat_temp.png";
+            }
         }
     }
 }

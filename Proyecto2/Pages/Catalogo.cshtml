@@ -7,10 +7,9 @@
 <div class="container mt-4">
     <div class="p-4 mb-4 bg-light rounded-3 shadow-sm">
         <h1 class="display-6 fw-bold">Sistema Inteligente de Librería - USAC</h1>
-        <p class="col-md-8 fs-6 text-muted">Gestión de estructuras dinámicas (TDAs propios, Árboles AVL e integración con Graphviz).</p>
+        <p class="col-md-8 fs-6 text-muted">Gestión avanzada de Estructuras de Datos No Lineales y Reportes Graphviz.</p>
     </div>
 
-    <!-- Alertas de Mensajes del Sistema -->
     @if (!string.IsNullOrEmpty(Model.Mensaje))
     {
         <div class="alert alert-info alert-dismissible fade show shadow-sm" role="alert">
@@ -19,7 +18,7 @@
         </div>
     }
 
-    <!-- Menú de Pestañas con todas las opciones del enunciado -->
+    <!-- Pestañas Principales -->
     <ul class="nav nav-tabs" id="catalogTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active fw-bold" id="xml-tab" data-bs-toggle="tab" data-bs-target="#xmlSection" type="button" role="tab">1. Cargar XML</button>
@@ -28,19 +27,22 @@
             <button class="nav-link fw-bold" id="cat-tab" data-bs-toggle="tab" data-bs-target="#catSection" type="button" role="tab">2. Categorías y Árboles AVL</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold" id="lib-tab" data-bs-toggle="tab" data-bs-target="#libSection" type="button" role="tab">3. Gestión de Libros</button>
+            <button class="nav-link fw-bold" id="lib-tab" data-bs-toggle="tab" data-bs-target="#libSection" type="button" role="tab">3. Gestión y Libros</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold" id="help-tab" data-bs-toggle="tab" data-bs-target="#helpSection" type="button" role="tab">4. Ayuda</button>
+            <button class="nav-link fw-bold" id="report-tab" data-bs-toggle="tab" data-bs-target="#reportSection" type="button" role="tab">4. Reportes Gráficos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold" id="help-tab" data-bs-toggle="tab" data-bs-target="#helpSection" type="button" role="tab">5. Ayuda</button>
         </li>
     </ul>
 
     <div class="tab-content border border-top-0 p-4 bg-white shadow-sm rounded-bottom mb-5" id="catalogTabsContent">
         
-        <!-- SECCIÓN 1: CARGA DE XML INCREMENTAL -->
+        <!-- SECCIÓN 1: CARGA DE XML -->
         <div class="tab-pane fade show active" id="xmlSection" role="tabpanel">
             <h3 class="mb-3">Carga de Archivo XML</h3>
-            <p class="text-muted">Cargue el archivo XML de configuración inicial o incremental para alimentar las estructuras de categorías y libros en memoria.</p>
+            <p class="text-muted">Cargue la configuración inicial o aplique cargas incrementales de archivos XML.</p>
             <form method="post" enctype="multipart/form-data" asp-page-handler="CargarXml" class="mt-3">
                 <div class="input-group mb-3">
                     <input type="file" class="form-control" name="ArchivoXml" accept=".xml" required />
@@ -49,13 +51,13 @@
             </form>
         </div>
 
-        <!-- SECCIÓN 2: GESTIÓN DE CATEGORÍAS Y ÁRBOLES AVL -->
+        <!-- SECCIÓN 2: CATEGORÍAS Y ÁRBOLES AVL -->
         <div class="tab-pane fade" id="catSection" role="tabpanel">
-            <h3 class="mb-3">Gestión de Categorías y Jerarquías</h3>
+            <h3 class="mb-3">Crear Categoría / Subcategoría</h3>
             <form method="post" asp-page-handler="AgregarCategoria" class="row g-3 mb-4 p-3 border rounded bg-light">
                 <div class="col-md-5">
-                    <label class="form-label fw-semibold">Nombre de la Categoría</label>
-                    <input type="text" class="form-control" name="NuevaCategoria" placeholder="Ej. Ingeniería" required />
+                    <label class="form-label fw-semibold">Nombre</label>
+                    <input type="text" class="form-control" name="NuevaCategoria" placeholder="Ej. Literatura" required />
                 </div>
                 <div class="col-md-5">
                     <label class="form-label fw-semibold">Categoría Padre (Opcional)</label>
@@ -68,21 +70,30 @@
 
             <hr class="my-4" />
 
-            <h3 class="mb-3">Visualización Gráfica del Árbol AVL</h3>
-            <p class="text-muted">Ingrese el nombre de una categoría existente para generar y renderizar su Árbol AVL ordenado por ISBN mediante Graphviz.</p>
+            <h3 class="mb-3">Consultar Categoría y Árbol AVL de Libros</h3>
             <form method="get" class="row g-3 mb-4">
                 <div class="col-md-9">
                     <input type="text" class="form-control" name="CategoriaSeleccionada" value="@Model.CategoriaSeleccionada" placeholder="Nombre exacto de la categoría" required />
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-dark w-100">Generar Gráfico</button>
+                    <button type="submit" class="btn btn-dark w-100">Consultar y Graficar</button>
                 </div>
             </form>
+
+            @if (!string.IsNullOrEmpty(Model.LibrosOrdenadosHtml))
+            {
+                <div class="card p-3 bg-light mb-4 border-0 shadow-sm">
+                    <h5 class="text-primary fw-bold">Libros en Orden Ascendente (In-Order por ISBN)</h5>
+                    <div class="p-2 bg-white border rounded">
+                        @Html.Raw(Model.LibrosOrdenadosHtml)
+                    </div>
+                </div>
+            }
 
             @if (!string.IsNullOrEmpty(Model.RutaImagenAvl))
             {
                 <div class="text-center p-3 border bg-light rounded mt-3">
-                    <h5 class="text-secondary">Estructura Árbol AVL (ISBN de 6 dígitos)</h5>
+                    <h5 class="text-secondary">Árbol AVL Balanceado</h5>
                     <div class="overflow-auto bg-white p-2 border rounded">
                         <img src="@Model.RutaImagenAvl" class="img-fluid" alt="Gráfico Árbol AVL" />
                     </div>
@@ -90,7 +101,7 @@
             }
         </div>
 
-<!-- SECCIÓN 3: GESTIÓN DE LIBROS (REGISTRO Y ELIMINACIÓN) -->
+        <!-- SECCIÓN 3: GESTIÓN DE LIBROS (REGISTRO Y ELIMINACIÓN) -->
         <div class="tab-pane fade" id="libSection" role="tabpanel">
             <div class="row">
                 <!-- Registro -->
@@ -117,7 +128,7 @@
                     </form>
                 </div>
 
-                <!-- Eliminación y Consultas -->
+                <!-- Eliminación y Consultas Globales (Árbol Binario) -->
                 <div class="col-md-6 ps-4">
                     <h3 class="mb-3">Eliminar Libro No Disponible</h3>
                     <form method="post" asp-page-handler="EliminarLibro" class="mb-4 p-3 border rounded bg-light">
@@ -160,21 +171,31 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 4: AYUDA E INFORMACIÓN ACADÉMICA -->
+        <!-- SECCIÓN 4: REPORTES GRÁFICOS (GRAPHVIZ) -->
+        <div class="tab-pane fade" id="reportSection" role="tabpanel">
+            <h3 class="mb-3">Reporte Gráfico: Jerarquía de Categorías</h3>
+            <p class="text-muted">Visualización n-aria de las categorías y subcategorías cargadas en el sistema.</p>
+            @if (!string.IsNullOrEmpty(Model.RutaImagenCategorias))
+            {
+                <div class="text-center p-3 border bg-light rounded mt-3">
+                    <div class="overflow-auto bg-white p-2 border rounded">
+                        <img src="@Model.RutaImagenCategorias" class="img-fluid" alt="Árbol de Categorías" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-warning">Cargue un archivo XML con categorías para generar el reporte gráfico.</p>
+            }
+        </div>
+
+        <!-- SECCIÓN 5: AYUDA -->
         <div class="tab-pane fade" id="helpSection" role="tabpanel">
-            <h3 class="mb-3">Información Académica y Documentación</h3>
+            <h3 class="mb-3">Información Académica</h3>
             <hr />
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="fs-5"><strong>Curso:</strong> Introducción a la Programación y Computación 2</p>
-                    <p class="fs-5"><strong>Universidad:</strong> Universidad de San Carlos de Guatemala (USAC)</p>
-                    <p class="fs-5"><strong>Facultad:</strong> Ingeniería - Escuela de Ciencias y Sistemas</p>
-                </div>
-                <div class="col-md-6 border-start ps-4">
-                    <h5 class="fw-bold">Especificaciones del Sistema</h5>
-                    <p class="text-muted">Desarrollado con arquitectura limpia en ASP.NET Core Razor Pages, implementando algoritmos de balanceo AVL, punteros dinámicos sin librerías estándar de colecciones, y compilación gráfica en tiempo de ejecución mediante Graphviz.</p>
-                </div>
-            </div>
+            <p class="fs-5"><strong>Curso:</strong> Introducción a la Programación y Computación 2</p>
+            <p class="fs-5"><strong>Universidad:</strong> Universidad de San Carlos de Guatemala (USAC)</p>
+            <p class="fs-5"><strong>Facultad:</strong> Ingeniería - Escuela de Ciencias y Sistemas</p>
         </div>
 
     </div>

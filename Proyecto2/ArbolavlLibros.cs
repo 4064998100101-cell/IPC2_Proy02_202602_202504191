@@ -5,7 +5,7 @@ namespace Proyecto2
 {
     public class Nodoarbol
     {
-        public Libro Valor { get;  set; }
+        public Libro Valor { get; set; }
         public Nodoarbol izquierda { get; set; }
         public Nodoarbol derecha { get; set; }
         public int Altura { get; set; }
@@ -43,11 +43,9 @@ namespace Proyecto2
             Nodoarbol x = y.izquierda;
             Nodoarbol T2 = x.derecha;
 
-            // Realizar rotación
             x.derecha = y;
             y.izquierda = T2;
 
-            // Actualizar alturas
             y.Altura = Max(obteneraltura(y.izquierda), obteneraltura(y.derecha)) + 1;
             x.Altura = Max(obteneraltura(x.izquierda), obteneraltura(x.derecha)) + 1;
 
@@ -59,11 +57,9 @@ namespace Proyecto2
             Nodoarbol y = x.derecha;
             Nodoarbol T2 = y.izquierda;
 
-            // Realizar rotación
             y.izquierda = x;
             x.derecha = T2;
 
-            // Actualizar alturas
             x.Altura = Max(obteneraltura(x.izquierda), obteneraltura(x.derecha)) + 1;
             y.Altura = Max(obteneraltura(y.izquierda), obteneraltura(y.derecha)) + 1;
 
@@ -77,7 +73,6 @@ namespace Proyecto2
 
         private Nodoarbol insertarRec(Nodoarbol nodo, Libro libro)
         {
-            // 1. Inserción normal de un Árbol Binario de Búsqueda
             if (nodo == null)
             {
                 return new Nodoarbol(libro);
@@ -93,37 +88,25 @@ namespace Proyecto2
             }
             else
             {
-                return nodo; // No se permiten ISBNs duplicados
+                return nodo; // No se permiten duplicados
             }
 
-            // 2. Actualizar la altura del nodo actual
             nodo.Altura = 1 + Max(obteneraltura(nodo.izquierda), obteneraltura(nodo.derecha));
-
-            // 3. Obtener el factor de balance para verificar si se desbalanceó
             int balance = obtenerbalance(nodo);
 
-            // --- CASOS DE DESBALANCEO ---
-
-            // Caso Izquierda-Izquierda (LL)
+            // Casos de desbalanceo
             if (balance > 1 && libro.Isbn < nodo.izquierda.Valor.Isbn)
-            {
                 return RotarDerecha(nodo);
-            }
 
-            // Caso Derecha-Derecha (RR)
             if (balance < -1 && libro.Isbn > nodo.derecha.Valor.Isbn)
-            {
                 return RotarIzquierda(nodo);
-            }
 
-            // Caso Izquierda-Derecha (LR)
             if (balance > 1 && libro.Isbn > nodo.izquierda.Valor.Isbn)
             {
                 nodo.izquierda = RotarIzquierda(nodo.izquierda);
                 return RotarDerecha(nodo);
             }
 
-            // Caso Derecha-Izquierda (RL)
             if (balance < -1 && libro.Isbn < nodo.derecha.Valor.Isbn)
             {
                 nodo.derecha = RotarDerecha(nodo.derecha);
@@ -131,6 +114,79 @@ namespace Proyecto2
             }
 
             return nodo;
+        }
+
+        public void Eliminar(int isbn)
+        {
+            Raiz = eliminarRec(Raiz, isbn);
+        }
+
+        private Nodoarbol eliminarRec(Nodoarbol raiz, int isbn)
+        {
+            if (raiz == null) return null;
+
+            if (isbn < raiz.Valor.Isbn)
+            {
+                raiz.izquierda = eliminarRec(raiz.izquierda, isbn);
+            }
+            else if (isbn > raiz.Valor.Isbn)
+            {
+                raiz.derecha = eliminarRec(raiz.derecha, isbn);
+            }
+            else
+            {
+                if ((raiz.izquierda == null) || (raiz.derecha == null))
+                {
+                    Nodoarbol temp = raiz.izquierda ?? raiz.derecha;
+                    if (temp == null)
+                    {
+                        raiz = null;
+                    }
+                    else
+                    {
+                        raiz = temp;
+                    }
+                }
+                else
+                {
+                    Nodoarbol temp = obtenerNodoMinimo(raiz.derecha);
+                    raiz.Valor = temp.Valor;
+                    raiz.derecha = eliminarRec(raiz.derecha, temp.Valor.Isbn);
+                }
+            }
+
+            if (raiz == null) return null;
+
+            raiz.Altura = 1 + Max(obteneraltura(raiz.izquierda), obteneraltura(raiz.derecha));
+            int balance = obtenerbalance(raiz);
+
+            if (balance > 1 && obtenerbalance(raiz.izquierda) >= 0)
+                return RotarDerecha(raiz);
+
+            if (balance > 1 && obtenerbalance(raiz.izquierda) < 0)
+            {
+                raiz.izquierda = RotarIzquierda(raiz.izquierda);
+                return RotarDerecha(raiz);
+            }
+
+            if (balance < -1 && obtenerbalance(raiz.derecha) <= 0)
+                return RotarIzquierda(raiz);
+
+            if (balance < -1 && obtenerbalance(raiz.derecha) > 0)
+            {
+                raiz.derecha = RotarDerecha(raiz.derecha);
+                return RotarIzquierda(raiz);
+            }
+
+            return raiz;
+        }
+
+        private Nodoarbol obtenerNodoMinimo(Nodoarbol nodo)
+        {
+            Nodoarbol actual = nodo;
+            while (actual.izquierda != null)
+                actual = actual.izquierda;
+            return actual;
         }
 
         public Libro Buscar(int isbn)
@@ -148,6 +204,23 @@ namespace Proyecto2
                 return BuscarRec(nodo.izquierda, isbn);
             }
             return BuscarRec(nodo.derecha, isbn);
+        }
+
+        public string ObtenerLibrosOrdenadosInOrder()
+        {
+            StringBuilder sb = new StringBuilder();
+            InOrderRec(Raiz, sb);
+            return sb.ToString();
+        }
+
+        private void InOrderRec(Nodoarbol nodo, StringBuilder sb)
+        {
+            if (nodo != null)
+            {
+                InOrderRec(nodo.izquierda, sb);
+                sb.AppendLine($"ISBN: {nodo.Valor.Isbn} - Título: {nodo.Valor.Titulo} (Autor: {nodo.Valor.Autor})<br/>");
+                InOrderRec(nodo.derecha, sb);
+            }
         }
 
         public string GenerarDot(string nombreCategoria)
@@ -187,89 +260,6 @@ namespace Proyecto2
                 GenerarDotRec(nodo.derecha, sb);
             }
         }
-        // metodos para eliminar nuevos valores
-        public void Eliminar(int isbn)
-        {
-            Raiz = eliminarR(Raiz,isbn);
-        }
-        private Nodoarbol eliminarR(Nodoarbol Raiz, int isbn)
-        {
-            if (Raiz== null)
-            
-            {
-             return null;   
-            }
-            if(isbn< Raiz.Valor.Isbn)
-            {
-                Raiz.izquierda=eliminarR(Raiz.izquierda, isbn);
-            }
-            else if(isbn> Raiz.Valor.Isbn)
-            {
-                Raiz.derecha=eliminarR(Raiz.derecha, isbn);
-            }
-            else
-            {
-                if ((Raiz.izquierda==null)|| Raiz.derecha==null)
-                {
-                    Nodoarbol temp=Raiz.izquierda ?? Raiz.derecha;
-                    if(temp==null)
-                    {
-                        temp=Raiz;
-                        Raiz=null;
-                    }
-                    else
-                    {
-                        Raiz=temp;
-                    }
-                }
-                else
-                {
-                    Nodoarbol temp= obtenerMinimo(Raiz.derecha);
-
-                    Raiz.Valor=temp.Valor;
-                    Raiz.derecha=eliminarR(Raiz.derecha, temp.Valor.Isbn);
-                }
-            }
-            if (Raiz==null)
-            {
-                return null;
-            }
-            Raiz.Altura=1+Max(obteneraltura(Raiz.izquierda), obteneraltura(Raiz.derecha));
-
-            int balance =obtenerbalance(Raiz);
-            // Vamos a balancear tras eliminar o sino valio
-            
-            if (balance>1 && obtenerbalance(Raiz.izquierda)>=0)
-            {
-                return RotarDerecha(Raiz);
-            }
-            if(balance<-1 && obteneraltura(Raiz.izquierda)<0)
-            {
-                Raiz.izquierda=RotarIzquierda(Raiz.izquierda);
-                return RotarDerecha(Raiz);
-            }
-            if (balance <-1 && obtenerbalance(Raiz.derecha)<=0)
-            {
-                return RotarIzquierda(Raiz);
-            }
-            if (balance <-1 && obtenerbalance(Raiz.derecha)>0)
-            {
-                Raiz.derecha=RotarDerecha(Raiz.derecha);
-                return RotarIzquierda(Raiz);
-            }
-          return Raiz;
-        }
-
-        private Nodoarbol obtenerMinimo(Nodoarbol nodo)
-        {
-            Nodoarbol actual=nodo;
-            while(actual.izquierda != null)
-            {
-                actual=actual.izquierda;
-                
-            }
-            return actual;
-        }
-
-    } 
+        
+    }
 }
