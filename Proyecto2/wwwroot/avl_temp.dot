@@ -1,14 +1,20 @@
 digraph AVL {
   node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
   edge [fontname="Arial"];
-  label="Árbol AVL - Categoria: Programación y Algoritmos\n";
+  label="Árbol AVL - Categoria: Literatura\n";
   labelloc="top";
   fontsize=16;
-  isbn_100045 [label="ISBN: 100045\nClean Code\nAutor: Robert C. Martin"];
-  isbn_100045 -> isbn_100012;
-  isbn_100012 [label="ISBN: 100012\nThe Pragmatic Programmer\nAutor: Andrew Hunt"];
-  isbn_100045 -> isbn_100089;
-  isbn_100089 [label="ISBN: 100089\nDesign Patterns\nAutor: Erich Gamma"];
-  isbn_100089 -> isbn_100088;
-  isbn_100088 [label="ISBN: 100088\nDesign Patterns\nAutor: E Gamma"];
+  isbn_1049 [label="ISBN: 1049\nLibro 49 - Literatura\nAutor: Autor I"];
+  isbn_1049 -> isbn_1048;
+  isbn_1048 [label="ISBN: 1048\nLibro 48 - Literatura\nAutor: Autor H"];
+  isbn_1048 -> isbn_1047;
+  isbn_1047 [label="ISBN: 1047\nLibro 47 - Literatura\nAutor: Autor G"];
+  isbn_1047 -> isbn_1046;
+  isbn_1046 [label="ISBN: 1046\nLibro 46 - Literatura\nAutor: Autor F"];
+  isbn_1046 -> isbn_1045;
+  isbn_1045 [label="ISBN: 1045\nLibro 45 - Literatura\nAutor: Autor E"];
+  isbn_1045 -> isbn_1044;
+  isbn_1044 [label="ISBN: 1044\nLibro 44 - Literatura\nAutor: Autor D"];
+  isbn_1049 -> isbn_1050;
+  isbn_1050 [label="ISBN: 1050\nLibro 50 - Literatura\nAutor: Autor J"];
 }
