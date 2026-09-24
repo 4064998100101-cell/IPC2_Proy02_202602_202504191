@@ -29,6 +29,8 @@ namespace Proyecto2.Pages
         [BindProperty] public string CategoriaNombre { get; set; }
 
         [BindProperty] public int IsbnBuscado { get; set; }
+        [BindProperty] public int IsbnAEliminar {get; set;}
+        [BindProperty] public string CategoriaParaEliminar{get; set;}
         
         // Resultados para mostrar en la vista
         public Libro LibroEncontrado { get; set; }
@@ -135,6 +137,29 @@ namespace Proyecto2.Pages
             else
             {
                 Mensaje = "Complete todos los campos obligatorios para registrar el libro.";
+            }
+            return Page();
+        }
+
+        // OPCION ELIMINAR 
+       public IActionResult OnPostEliminarLibro()
+        {
+            if (IsbnAEliminar > 0 && !string.IsNullOrEmpty(CategoriaParaEliminar))
+            {
+                var cat = _catalogo.RaizCategorias.Buscar(CategoriaParaEliminar);
+                if (cat != null)
+                {
+                    cat.LibrosAsociados.Eliminar(IsbnAEliminar);
+                    Mensaje = $"Libro con ISBN {IsbnAEliminar} eliminado de la categoría '{CategoriaParaEliminar}'.";
+                }
+                else
+                {
+                    Mensaje = $"No se encontró la categoría '{CategoriaParaEliminar}'.";
+                }
+            }
+            else
+            {
+                Mensaje = "Ingrese un ISBN válido y la categoría para eliminar.";
             }
             return Page();
         }

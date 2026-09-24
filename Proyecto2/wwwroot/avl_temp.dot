@@ -1,22 +1,20 @@
 digraph AVL {
    node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
    edge [fontname="Arial"];
-   label="Árbol AVL - Categoria: Programacion\n";
+   label="Árbol AVL - Categoria: Tecnologia\n";
    labelloc="top";
    fontsize=16;
-   isbn_1011 [label="ISBN: 1011\nLibro 11 - Programacion\nAutor: Autor A"];
-   isbn_1011 -> isbn_1009;
-   isbn_1009 [label="ISBN: 1009\nLibro 09 - Programacion\nAutor: Autor I"];
-   isbn_1009 -> isbn_1008;
-   isbn_1008 [label="ISBN: 1008\nLibro 08 - Programacion\nAutor: Autor H"];
-   isbn_1009 -> isbn_1010;
-   isbn_1010 [label="ISBN: 1010\nLibro 10 - Programacion\nAutor: Autor J"];
-   isbn_1011 -> isbn_1013;
-   isbn_1013 [label="ISBN: 1013\nLibro 13 - Programacion\nAutor: Autor C"];
-   isbn_1013 -> isbn_1012;
-   isbn_1012 [label="ISBN: 1012\nLibro 12 - Programacion\nAutor: Autor B"];
-   isbn_1013 -> isbn_1014;
-   isbn_1014 [label="ISBN: 1014\nLibro 14 - Programacion\nAutor: Autor D"];
-   isbn_1014 -> isbn_1015;
-   isbn_1015 [label="ISBN: 1015\nLibro 15 - Programacion\nAutor: Autor E"];
+   isbn_1004 [label="ISBN: 1004\nLibro 04 - Tecnologia\nAutor: Autor D"];
+   isbn_1004 -> isbn_1002;
+   isbn_1002 [label="ISBN: 1002\nLibro 02 - Tecnologia\nAutor: Autor B"];
+   isbn_1002 -> isbn_1001;
+   isbn_1001 [label="ISBN: 1001\nLibro 01 - Tecnologia\nAutor: Autor A"];
+   isbn_1002 -> isbn_1003;
+   isbn_1003 [label="ISBN: 1003\nLibro 03 - Tecnologia\nAutor: Autor C"];
+   isbn_1004 -> isbn_1006;
+   isbn_1006 [label="ISBN: 1006\nLibro 06 - Tecnologia\nAutor: Autor F"];
+   isbn_1006 -> isbn_1005;
+   isbn_1005 [label="ISBN: 1005\nLibro 05 - Tecnologia\nAutor: Autor E"];
+   isbn_1006 -> isbn_1007;
+   isbn_1007 [label="ISBN: 1007\nLibro 07 - Tecnologia\nAutor: Autor G"];
 }

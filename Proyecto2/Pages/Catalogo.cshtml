@@ -90,10 +90,10 @@
             }
         </div>
 
-        <!-- SECCIÓN 3: GESTIÓN Y CONSULTAS DE LIBROS -->
+<!-- SECCIÓN 3: GESTIÓN DE LIBROS (REGISTRO Y ELIMINACIÓN) -->
         <div class="tab-pane fade" id="libSection" role="tabpanel">
             <div class="row">
-                <!-- Registro Individual de Libros -->
+                <!-- Registro -->
                 <div class="col-md-6 border-end pe-4">
                     <h3 class="mb-3">Registrar Libro</h3>
                     <form method="post" asp-page-handler="RegistrarLibro">
@@ -102,7 +102,7 @@
                             <input type="number" class="form-control" name="Isbn" min="100000" max="999999" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Título del Libro</label>
+                            <label class="form-label fw-semibold">Título</label>
                             <input type="text" class="form-control" name="Titulo" required />
                         </div>
                         <div class="mb-3">
@@ -110,22 +110,32 @@
                             <input type="text" class="form-control" name="Autor" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Categoría Asociada</label>
+                            <label class="form-label fw-semibold">Categoría</label>
                             <input type="text" class="form-control" name="CategoriaNombre" required />
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrar Libro en Árbol</button>
+                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
                     </form>
                 </div>
 
-                <!-- Consultas Avanzadas y Búsquedas -->
+                <!-- Eliminación y Consultas -->
                 <div class="col-md-6 ps-4">
-                    <h3 class="mb-3">Consultas de Libros</h3>
-                    
-                    <!-- Búsqueda por ISBN -->
-                    <form method="post" asp-page-handler="BuscarIsbn" class="mb-4">
-                        <label class="form-label fw-semibold">Buscar por ISBN</label>
+                    <h3 class="mb-3">Eliminar Libro No Disponible</h3>
+                    <form method="post" asp-page-handler="EliminarLibro" class="mb-4 p-3 border rounded bg-light">
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">ISBN a Eliminar</label>
+                            <input type="number" class="form-control" name="IsbnAEliminar" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Categoría del Libro</label>
+                            <input type="text" class="form-control" name="CategoriaParaEliminar" required />
+                        </div>
+                        <button type="submit" class="btn btn-danger w-100">Eliminar Libro</button>
+                    </form>
+
+                    <h3 class="mb-3">Búsqueda y Rangos Globales</h3>
+                    <form method="post" asp-page-handler="BuscarIsbn" class="mb-3">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="IsbnBuscado" placeholder="Ej. 100452" required />
+                            <input type="number" class="form-control" name="IsbnBuscado" placeholder="Buscar por ISBN" required />
                             <button type="submit" class="btn btn-secondary">Buscar</button>
                         </div>
                     </form>
@@ -133,28 +143,18 @@
                     @if (Model.LibroEncontrado != null)
                     {
                         <div class="alert alert-success shadow-sm">
-                            <h6 class="alert-heading fw-bold">¡Libro Encontrado!</h6>
-                            <hr class="my-1">
-                            <p class="mb-0"><strong>ISBN:</strong> @Model.LibroEncontrado.Isbn</p>
-                            <p class="mb-0"><strong>Título:</strong> @Model.LibroEncontrado.Titulo</p>
-                            <p class="mb-0"><strong>Autor:</strong> @Model.LibroEncontrado.Autor</p>
+                            <p class="mb-0"><strong>ISBN:</strong> @Model.LibroEncontrado.Isbn | <strong>Título:</strong> @Model.LibroEncontrado.Titulo | <strong>Autor:</strong> @Model.LibroEncontrado.Autor</p>
                         </div>
                     }
 
-                    <!-- Consultas de Extremos (Menor y Mayor ISBN) -->
-                    <div class="card bg-light border-0 p-3 mt-4">
-                        <h6 class="fw-bold mb-3">Consultas de Rango Global</h6>
-                        <form method="post" asp-page-handler="MenorMayorIsbn" class="d-grid gap-2">
-                            <button type="submit" name="accion" value="menor" class="btn btn-outline-info text-dark fw-semibold">Mostrar Libro con Menor ISBN</button>
-                            <button type="submit" name="accion" value="mayor" class="btn btn-outline-warning text-dark fw-semibold">Mostrar Libro con Mayor ISBN</button>
-                        </form>
-                    </div>
+                    <form method="post" asp-page-handler="MenorMayorIsbn" class="d-grid gap-2 mt-3">
+                        <button type="submit" name="accion" value="menor" class="btn btn-outline-info text-dark fw-semibold">Mostrar Menor ISBN</button>
+                        <button type="submit" name="accion" value="mayor" class="btn btn-outline-warning text-dark fw-semibold">Mostrar Mayor ISBN</button>
+                    </form>
 
                     @if (!string.IsNullOrEmpty(Model.ResultadoExtremo))
                     {
-                        <div class="alert alert-secondary mt-3 shadow-sm">
-                            @Model.ResultadoExtremo
-                        </div>
+                        <div class="alert alert-secondary mt-3 shadow-sm">@Model.ResultadoExtremo</div>
                     }
                 </div>
             </div>
