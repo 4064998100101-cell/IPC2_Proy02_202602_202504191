@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace Proyecto2.Pages
+namespace Proyecto2
 {
     public class CatalogoModel : PageModel
     {
@@ -18,21 +18,19 @@ namespace Proyecto2.Pages
             _xmlService = xmlService;
         }
 
-        // Propiedades para formularios
         [BindProperty] public IFormFile ArchivoXml { get; set; }
         [BindProperty] public string NuevaCategoria { get; set; }
         [BindProperty] public string CategoriaPadre { get; set; }
 
-        [BindProperty] public int Isbn { get; set; }
+        [BindProperty] public long Isbn { get; set; }
         [BindProperty] public string Titulo { get; set; }
         [BindProperty] public string Autor { get; set; }
         [BindProperty] public string CategoriaNombre { get; set; }
 
-        [BindProperty] public int IsbnBuscado { get; set; }
-        [BindProperty] public int IsbnAEliminar { get; set; }
+        [BindProperty] public long IsbnBuscado { get; set; }
+        [BindProperty] public long IsbnAEliminar { get; set; }
         [BindProperty] public string CategoriaParaEliminar { get; set; }
         
-        // Resultados para mostrar en la vista
         public Libro LibroEncontrado { get; set; }
         public string ResultadoExtremo { get; set; }
         public string Mensaje { get; set; }
@@ -68,11 +66,10 @@ namespace Proyecto2.Pages
             }
             catch
             {
-                // Graphviz no disponible o error en PATH
+                // Graphviz no disponible
             }
         }
 
-        // Opción 1: Cargar Archivo XML
         public async Task<IActionResult> OnPostCargarXmlAsync()
         {
             if (ArchivoXml != null && ArchivoXml.Length > 0)
@@ -88,8 +85,6 @@ namespace Proyecto2.Pages
                     if (System.IO.File.Exists(rutaTemporal)) System.IO.File.Delete(rutaTemporal);
                     
                     Mensaje = "¡Archivo XML procesado e integrado exitosamente!";
-                    
-                    // Generar los reportes visuales inmediatamente después de procesar el XML
                     GenerarReportesVisuales();
                 }
                 catch (Exception ex)
@@ -104,25 +99,37 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Opción 2: Gestión de Categorías
         public IActionResult OnPostAgregarCategoria()
         {
             if (!string.IsNullOrEmpty(NuevaCategoria))
             {
-                _catalogo.ObtenerOCrearCategoria(NuevaCategoria, CategoriaPadre);
-                Mensaje = $"Categoría '{NuevaCategoria}' agregada o enlazada correctamente.";
+                var resultado = _catalogo.ObtenerOCrearCategoria(NuevaCategoria, CategoriaPadre);
+                if (resultado != null)
+                {
+                    Mensaje = $"Categoría '{NuevaCategoria}' agregada o enlazada correctamente.";
+                }
+                else
+                {
+                    Mensaje = $"No se pudo crear la categoría '{NuevaCategoria}'. Verifique que el padre exista.";
+                }
                 GenerarReportesVisuales();
             }
             return Page();
         }
 
-        // Opción 3: Registro de Libros
         public IActionResult OnPostRegistrarLibro()
         {
             if (Isbn > 0 && !string.IsNullOrEmpty(Titulo) && !string.IsNullOrEmpty(CategoriaNombre))
             {
-                _catalogo.RegistrarLibro(Isbn, Titulo, Autor, CategoriaNombre);
-                Mensaje = $"Libro con ISBN {Isbn} registrado exitosamente.";
+                bool exito = _catalogo.RegistrarLibro(Isbn, Titulo, Autor, CategoriaNombre);
+                if (exito)
+                {
+                    Mensaje = $"Libro con ISBN {Isbn} registrado exitosamente.";
+                }
+                else
+                {
+                    Mensaje = $"Error: El ISBN {Isbn} ya existe globalmente o la categoría '{CategoriaNombre}' no existe.";
+                }
                 GenerarReportesVisuales();
             }
             else
@@ -132,16 +139,17 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Opción: Eliminar Libro
         public IActionResult OnPostEliminarLibro()
         {
             if (IsbnAEliminar > 0 && !string.IsNullOrEmpty(CategoriaParaEliminar))
             {
                 var cat = _catalogo.RaizCategorias.Buscar(CategoriaParaEliminar);
+
                 if (cat != null)
                 {
                     cat.LibrosAsociados.Eliminar(IsbnAEliminar);
-                    Mensaje = $"Libro con ISBN {IsbnAEliminar} eliminado de la categoría '{CategoriaParaEliminar}'.";
+                    _catalogo.TodosLosLibrosGlobal.eliminar(IsbnAEliminar);
+                    Mensaje = $"Libro con ISBN {IsbnAEliminar} eliminado de la categoría '{CategoriaParaEliminar}' y del registro global.";
                     GenerarReportesVisuales();
                 }
                 else
@@ -156,7 +164,6 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Opción 4: Buscar libro por ISBN (Árbol Binario Global)
         public IActionResult OnPostBuscarIsbn()
         {
             LibroEncontrado = _catalogo.TodosLosLibrosGlobal.BuscarPorIsbn(IsbnBuscado);
@@ -168,7 +175,6 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Opción 5: Mostrar Libro con menor o mayor ISBN (Árbol Binario Global)
         public IActionResult OnPostMenorMayorIsbn(string accion)
         {
             if (accion == "menor")
@@ -189,13 +195,11 @@ namespace Proyecto2.Pages
             return Page();
         }
 
-        // Método auxiliar para centralizar la generación de imágenes con Graphviz
         private void GenerarReportesVisuales()
         {
             string wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             if (!Directory.Exists(wwwRootPath)) Directory.CreateDirectory(wwwRootPath);
 
-            // 1. Generar gráfico AVL si se seleccionó una categoría
             if (!string.IsNullOrEmpty(CategoriaSeleccionada))
             {
                 var cat = _catalogo.RaizCategorias.Buscar(CategoriaSeleccionada);
@@ -213,7 +217,6 @@ namespace Proyecto2.Pages
                 }
             }
 
-            // 2. Generar gráfico general de la jerarquía de categorías
             if (_catalogo.RaizCategorias.Cabeza != null)
             {
                 string dotCatContent = _catalogo.RaizCategorias.GenerarDotCategorias();

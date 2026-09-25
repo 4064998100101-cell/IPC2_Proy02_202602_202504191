@@ -1,18 +1,22 @@
 digraph AVL {
    node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
    edge [fontname="Arial"];
-   label="Árbol AVL - Categoria: Literatura\n";
+   label="Árbol AVL - Categoria: Fisica\n";
    labelloc="top";
    fontsize=16;
-   isbn_1047 [label="ISBN: 1047\nLibro 47 - Literatura\nAutor: Autor G"];
-   isbn_1047 -> isbn_1045;
-   isbn_1045 [label="ISBN: 1045\nLibro 45 - Literatura\nAutor: Autor E"];
-   isbn_1045 -> isbn_1044;
-   isbn_1044 [label="ISBN: 1044\nLibro 44 - Literatura\nAutor: Autor D"];
-   isbn_1047 -> isbn_1049;
-   isbn_1049 [label="ISBN: 1049\nLibro 49 - Literatura\nAutor: Autor I"];
-   isbn_1049 -> isbn_1048;
-   isbn_1048 [label="ISBN: 1048\nLibro 48 - Literatura\nAutor: Autor H"];
-   isbn_1049 -> isbn_1050;
-   isbn_1050 [label="ISBN: 1050\nLibro 50 - Literatura\nAutor: Autor J"];
+   isbn_1040 [label="ISBN: 1040\nLibro 40 - Fisica\nAutor: Autor J"];
+   isbn_1040 -> isbn_1038;
+   isbn_1038 [label="ISBN: 1038\nLibro 38 - Fisica\nAutor: Autor H"];
+   isbn_1038 -> isbn_1037;
+   isbn_1037 [label="ISBN: 1037\nLibro 37 - Fisica\nAutor: Autor G"];
+   isbn_1037 -> isbn_100;
+   isbn_100 [label="ISBN: 100\nFisica General\nAutor: Marie Curie"];
+   isbn_1038 -> isbn_1039;
+   isbn_1039 [label="ISBN: 1039\nLibro 39 - Fisica\nAutor: Autor I"];
+   isbn_1040 -> isbn_1042;
+   isbn_1042 [label="ISBN: 1042\nLibro 42 - Fisica\nAutor: Autor B"];
+   isbn_1042 -> isbn_1041;
+   isbn_1041 [label="ISBN: 1041\nLibro 41 - Fisica\nAutor: Autor A"];
+   isbn_1042 -> isbn_1043;
+   isbn_1043 [label="ISBN: 1043\nLibro 43 - Fisica\nAutor: Autor C"];
 }

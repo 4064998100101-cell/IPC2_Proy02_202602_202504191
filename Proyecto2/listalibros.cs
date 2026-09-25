@@ -42,7 +42,7 @@ namespace Proyecto2
             Tamanio++;
         }
 
-        public Libro BuscarPorIsbn(int isbn)
+        public Libro BuscarPorIsbn(long isbn)
         {
             NodoLibro actual = Cabeza;
             while (actual != null)
@@ -86,6 +86,79 @@ namespace Proyecto2
                 actual = actual.Siguiente;
             }
             return mayor;
+        }
+
+        public void eliminar(long isbn)
+        {
+            if (Cabeza == null) return;
+
+            if (Cabeza.Valor.Isbn == isbn)
+            {
+                Cabeza = Cabeza.Siguiente;
+                Tamanio--;
+                return;
+            }
+
+            NodoLibro actual = Cabeza;
+            while (actual.Siguiente != null)
+            {
+                if (actual.Siguiente.Valor.Isbn == isbn)
+                {
+                    actual.Siguiente = actual.Siguiente.Siguiente;
+                    Tamanio--;
+                    return;
+                }
+                actual = actual.Siguiente;
+            }
+        }
+
+
+        public string GenerarDot(string nombreCategoria)
+        {
+            var dot = new System.Text.StringBuilder();
+            dot.AppendLine("digraph G {");
+            dot.AppendLine("node [shape=box, style=filled, fillcolor=lightblue];");
+            dot.AppendLine($"label=\"Libros de la Categoría: {nombreCategoria}\";");
+            
+            NodoLibro actual = Cabeza;
+            int id = 0;
+            string nodoAnterior = null;
+
+            while (actual != null)
+            {
+                string nombreNodo = $"nodo_{id}";
+                dot.AppendLine($"{nombreNodo} [label=\"ISBN: {actual.Valor.Isbn}\\nTítulo: {actual.Valor.Titulo}\\nAutor: {actual.Valor.Autor}\"];");
+                
+                if (nodoAnterior != null)
+                {
+                    dot.AppendLine($"{nodoAnterior} -> {nombreNodo};");
+                }
+                
+                nodoAnterior = nombreNodo;
+                actual = actual.Siguiente;
+                id++;
+            }
+
+            dot.AppendLine("}");
+            return dot.ToString();
+        }
+
+        public string ObtenerLibrosOrdenadosInOrder()
+        {
+            if (Cabeza == null) return "<p class='text-muted'>No hay libros asociados a esta categoría.</p>";
+
+            var html = new System.Text.StringBuilder();
+            html.AppendLine("<ul class='list-group'>");
+
+            NodoLibro actual = Cabeza;
+            while (actual != null)
+            {
+                html.AppendLine($"<li class='list-group-item'><strong>ISBN:</strong> {actual.Valor.Isbn} | <strong>Título:</strong> {actual.Valor.Titulo} | <strong>Autor:</strong> {actual.Valor.Autor}</li>");
+                actual = actual.Siguiente;
+            }
+
+            html.AppendLine("</ul>");
+            return html.ToString();
         }
     }
 }

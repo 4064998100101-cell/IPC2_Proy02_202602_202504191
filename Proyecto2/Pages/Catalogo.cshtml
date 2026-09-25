@@ -1,13 +1,13 @@
 @page
-@model Proyecto2.Pages.CatalogoModel
+@model Proyecto2.CatalogoModel
 @{
     ViewData["Title"] = "Gestión de Catálogo - USAC";
 }
 
 <div class="container mt-4">
     <div class="p-4 mb-4 bg-light rounded-3 shadow-sm">
-        <h1 class="display-6 fw-bold">Sistema Inteligente de Librería - USAC</h1>
-        <p class="col-md-8 fs-6 text-muted">Gestión avanzada de Estructuras de Datos No Lineales y Reportes Graphviz.</p>
+        <h1 class="display-6 fw-bold">Sistema Inteligente de Librería </h1>
+        <p class="col-md-8 fs-6 text-muted">Sistema inteligente que permite agregar y modificar los elementos en una libreria</p>
     </div>
 
     @if (!string.IsNullOrEmpty(Model.Mensaje))
@@ -33,7 +33,7 @@
             <button class="nav-link fw-bold" id="report-tab" data-bs-toggle="tab" data-bs-target="#reportSection" type="button" role="tab">4. Reportes Gráficos</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold" id="help-tab" data-bs-toggle="tab" data-bs-target="#helpSection" type="button" role="tab">5. Ayuda</button>
+            <button class="nav-link fw-bold" id="help-tab" data-bs-toggle="tab" data-bs-target="#helpSection" type="button" role="tab">5. Informacion y Ayuda</button>
         </li>
     </ul>
 
@@ -42,10 +42,10 @@
         <!-- SECCIÓN 1: CARGA DE XML -->
         <div class="tab-pane fade show active" id="xmlSection" role="tabpanel">
             <h3 class="mb-3">Carga de Archivo XML</h3>
-            <p class="text-muted">Cargue la configuración inicial o aplique cargas incrementales de archivos XML.</p>
+            <p class="text-muted">Cargue la configuración inicial o aplique cargas incrementales de archivos XML (los ISBN duplicados globales se omitirán automáticamente).</p>
             <form method="post" enctype="multipart/form-data" asp-page-handler="CargarXml" class="mt-3">
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" name="ArchivoXml" accept=".xml" required />
+                    <input type="file" class="form-control" asp-for="ArchivoXml" accept=".xml" required />
                     <button type="submit" class="btn btn-primary px-4">Procesar Archivo XML</button>
                 </div>
             </form>
@@ -57,11 +57,11 @@
             <form method="post" asp-page-handler="AgregarCategoria" class="row g-3 mb-4 p-3 border rounded bg-light">
                 <div class="col-md-5">
                     <label class="form-label fw-semibold">Nombre</label>
-                    <input type="text" class="form-control" name="NuevaCategoria" placeholder="Ej. Literatura" required />
+                    <input type="text" class="form-control" asp-for="NuevaCategoria" placeholder="Ej. Literatura" required />
                 </div>
                 <div class="col-md-5">
                     <label class="form-label fw-semibold">Categoría Padre (Opcional)</label>
-                    <input type="text" class="form-control" name="CategoriaPadre" placeholder="Dejar en blanco si es principal" />
+                    <input type="text" class="form-control" asp-for="CategoriaPadre" placeholder="Dejar en blanco si es principal" />
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
                     <button type="submit" class="btn btn-success w-100">Crear</button>
@@ -95,7 +95,7 @@
                 <div class="text-center p-3 border bg-light rounded mt-3">
                     <h5 class="text-secondary">Árbol AVL Balanceado</h5>
                     <div class="overflow-auto bg-white p-2 border rounded">
-                        <img src="@Model.RutaImagenAvl" class="img-fluid" alt="Gráfico Árbol AVL" />
+                        <img src="@Model.RutaImagenAvl?t=@DateTime.Now.Ticks" class="img-fluid" alt="Gráfico Árbol AVL" />
                     </div>
                 </div>
             }
@@ -109,36 +109,36 @@
                     <h3 class="mb-3">Registrar Libro</h3>
                     <form method="post" asp-page-handler="RegistrarLibro">
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">ISBN (6 dígitos)</label>
-                            <input type="number" class="form-control" name="Isbn" min="100000" max="999999" required />
+                            <label class="form-label fw-semibold">ISBN </label>
+                            <input type="number" class="form-control" asp-for="Isbn" required />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Título</label>
-                            <input type="text" class="form-control" name="Titulo" required />
+                            <input type="text" class="form-control" asp-for="Titulo" required />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Autor</label>
-                            <input type="text" class="form-control" name="Autor" required />
+                            <input type="text" class="form-control" asp-for="Autor" required />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Categoría</label>
-                            <input type="text" class="form-control" name="CategoriaNombre" required />
+                            <input type="text" class="form-control" asp-for="CategoriaNombre" required />
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Registrar</button>
                     </form>
                 </div>
 
-                <!-- Eliminación y Consultas Globales (Árbol Binario) -->
+                
                 <div class="col-md-6 ps-4">
                     <h3 class="mb-3">Eliminar Libro No Disponible</h3>
                     <form method="post" asp-page-handler="EliminarLibro" class="mb-4 p-3 border rounded bg-light">
                         <div class="mb-2">
                             <label class="form-label fw-semibold">ISBN a Eliminar</label>
-                            <input type="number" class="form-control" name="IsbnAEliminar" required />
+                            <input type="number" class="form-control" asp-for="IsbnAEliminar" required />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Categoría del Libro</label>
-                            <input type="text" class="form-control" name="CategoriaParaEliminar" required />
+                            <input type="text" class="form-control" asp-for="CategoriaParaEliminar" required />
                         </div>
                         <button type="submit" class="btn btn-danger w-100">Eliminar Libro</button>
                     </form>
@@ -146,7 +146,7 @@
                     <h3 class="mb-3">Búsqueda y Rangos Globales</h3>
                     <form method="post" asp-page-handler="BuscarIsbn" class="mb-3">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="IsbnBuscado" placeholder="Buscar por ISBN" required />
+                            <input type="number" class="form-control" asp-for="IsbnBuscado" placeholder="Buscar por ISBN" required />
                             <button type="submit" class="btn btn-secondary">Buscar</button>
                         </div>
                     </form>
@@ -179,7 +179,7 @@
             {
                 <div class="text-center p-3 border bg-light rounded mt-3">
                     <div class="overflow-auto bg-white p-2 border rounded">
-                        <img src="@Model.RutaImagenCategorias" class="img-fluid" alt="Árbol de Categorías" />
+                        <img src="@Model.RutaImagenCategorias?t=@DateTime.Now.Ticks" class="img-fluid" alt="Árbol de Categorías" />
                     </div>
                 </div>
             }
@@ -191,11 +191,15 @@
 
         <!-- SECCIÓN 5: AYUDA -->
         <div class="tab-pane fade" id="helpSection" role="tabpanel">
-            <h3 class="mb-3">Información Académica</h3>
+            <h3 class="mb-3">Información Académica del estudiante</h3>
             <hr />
             <p class="fs-5"><strong>Curso:</strong> Introducción a la Programación y Computación 2</p>
-            <p class="fs-5"><strong>Universidad:</strong> Universidad de San Carlos de Guatemala (USAC)</p>
+            <p class="fs-5"><strong>Universidad:</strong> Universidad de San Carlos de Guatemala </p>
             <p class="fs-5"><strong>Facultad:</strong> Ingeniería - Escuela de Ciencias y Sistemas</p>
+            <p class="fs-5"><strong>Nombre:</strong> Santiago Benjamin Tzoc Ican</p>
+            <p class="fs-5"><strong>Carnet:</strong> 202504191</p>
+            <p class="fs-5"><strong>Repositorio: </strong> <a href="https://github.com/4064998100101-cell/IPC2_Proy02_202602_202504191.git" target="_blank" class="text-decoration-none">Repositorio</a> </p>
+            <p class="fs-5"><strong>Link Documentacion:</strong> </p>
         </div>
 
     </div>
