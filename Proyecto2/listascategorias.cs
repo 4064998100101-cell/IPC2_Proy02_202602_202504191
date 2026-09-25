@@ -72,7 +72,6 @@ namespace Proyecto2
             return null;
         }
 
-        // --- MÉTODOS DE GRAPHVIZ INTEGRADOS CORRECTAMENTE ---
 
         public string GenerarDotCategorias()
         {
@@ -84,7 +83,7 @@ namespace Proyecto2
             sb.AppendLine("   labelloc=\"top\";");
             sb.AppendLine("   fontsize=16;");
 
-            // Recorremos la lista de categorías principales de forma segura
+
             Nodocat actual = Cabeza;
             while (actual != null)
             {
@@ -103,7 +102,7 @@ namespace Proyecto2
             string idActual = $"cat_{nodo.Nombre.Replace(" ", "_")}";
             sb.AppendLine($"   {idActual} [label=\"{nodo.Nombre}\"];");
 
-            // Si tiene subcategorías, las recorremos y enlazamos
+
             if (nodo.SubCategorias != null && nodo.SubCategorias.Cabeza != null)
             {
                 Nodocat actualSub = nodo.SubCategorias.Cabeza;

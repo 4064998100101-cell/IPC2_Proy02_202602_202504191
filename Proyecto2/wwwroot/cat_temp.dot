@@ -4,11 +4,6 @@ digraph Categorias {
    label="Jerarquía de Categorías y Subcategorías\n";
    labelloc="top";
    fontsize=16;
-   cat_Catalogo [label="Catalogo"];
-   cat_Catalogo -> cat_Ciencias;
-   cat_Ciencias [label="Ciencias"];
-   cat_Catalogo -> cat_Novelas;
-   cat_Novelas [label="Novelas"];
    cat_Ciencia [label="Ciencia"];
    cat_Ciencia -> cat_Fisica;
    cat_Fisica [label="Fisica"];

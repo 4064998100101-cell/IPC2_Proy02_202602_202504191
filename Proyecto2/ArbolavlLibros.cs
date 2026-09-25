@@ -189,12 +189,12 @@ namespace Proyecto2
             return actual;
         }
 
-        public Libro Buscar(int isbn)
+        public Libro Buscar(long isbn)
         {
             return BuscarRec(Raiz, isbn);
         }
 
-        private Libro BuscarRec(Nodoarbol nodo, int isbn)
+        private Libro BuscarRec(Nodoarbol nodo, long isbn)
         {
             if (nodo == null) return null;
             if (nodo.Valor.Isbn == isbn) return nodo.Valor;

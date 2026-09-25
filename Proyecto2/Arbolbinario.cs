@@ -42,12 +42,12 @@ namespace Proyecto2
             return nodo;
         }
 
-        public Libro BuscarPorIsbn(int isbn)
+        public Libro BuscarPorIsbn(long isbn)
         {
             return BuscarRec(Raiz, isbn);
         }
 
-        private Libro BuscarRec(NodoArbolBinario nodo, int isbn)
+        private Libro BuscarRec(NodoArbolBinario nodo, long isbn)
         {
             if (nodo == null) return null;
             if (nodo.Valor.Isbn == isbn) return nodo.Valor;
