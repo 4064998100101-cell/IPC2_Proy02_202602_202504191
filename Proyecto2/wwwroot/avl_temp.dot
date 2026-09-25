@@ -1,22 +1,20 @@
 digraph AVL {
    node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
    edge [fontname="Arial"];
-   label="Árbol AVL - Categoria: Fisica\n";
+   label="Árbol AVL - Categoria: Bases de Datos\n";
    labelloc="top";
    fontsize=16;
-   isbn_1040 [label="ISBN: 1040\nLibro 40 - Fisica\nAutor: Autor J"];
-   isbn_1040 -> isbn_1038;
-   isbn_1038 [label="ISBN: 1038\nLibro 38 - Fisica\nAutor: Autor H"];
-   isbn_1038 -> isbn_1037;
-   isbn_1037 [label="ISBN: 1037\nLibro 37 - Fisica\nAutor: Autor G"];
-   isbn_1037 -> isbn_100;
-   isbn_100 [label="ISBN: 100\nFisica General\nAutor: Marie Curie"];
-   isbn_1038 -> isbn_1039;
-   isbn_1039 [label="ISBN: 1039\nLibro 39 - Fisica\nAutor: Autor I"];
-   isbn_1040 -> isbn_1042;
-   isbn_1042 [label="ISBN: 1042\nLibro 42 - Fisica\nAutor: Autor B"];
-   isbn_1042 -> isbn_1041;
-   isbn_1041 [label="ISBN: 1041\nLibro 41 - Fisica\nAutor: Autor A"];
-   isbn_1042 -> isbn_1043;
-   isbn_1043 [label="ISBN: 1043\nLibro 43 - Fisica\nAutor: Autor C"];
+   isbn_1019 [label="ISBN: 1019\nLibro 19 - Bases de Datos\nAutor: Autor I"];
+   isbn_1019 -> isbn_1017;
+   isbn_1017 [label="ISBN: 1017\nLibro 17 - Bases de Datos\nAutor: Autor G"];
+   isbn_1017 -> isbn_1016;
+   isbn_1016 [label="ISBN: 1016\nLibro 16 - Bases de Datos\nAutor: Autor F"];
+   isbn_1017 -> isbn_1018;
+   isbn_1018 [label="ISBN: 1018\nLibro 18 - Bases de Datos\nAutor: Autor H"];
+   isbn_1019 -> isbn_1021;
+   isbn_1021 [label="ISBN: 1021\nLibro 21 - Bases de Datos\nAutor: Autor A"];
+   isbn_1021 -> isbn_1020;
+   isbn_1020 [label="ISBN: 1020\nLibro 20 - Bases de Datos\nAutor: Autor J"];
+   isbn_1021 -> isbn_1022;
+   isbn_1022 [label="ISBN: 1022\nLibro 22 - Bases de Datos\nAutor: Autor B"];
 }
