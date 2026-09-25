@@ -5,12 +5,13 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace Proyecto2.Pages
+namespace Proyecto2
 {
     public class CatalogoModel : PageModel
     {
         private readonly Catalogo _catalogo;
         private readonly Xml _xmlService;
+        private ListaLibros _libro;
 
         public CatalogoModel(Catalogo catalogo, Xml xmlService)
         {
@@ -23,13 +24,13 @@ namespace Proyecto2.Pages
         [BindProperty] public string NuevaCategoria { get; set; }
         [BindProperty] public string CategoriaPadre { get; set; }
 
-        [BindProperty] public int Isbn { get; set; }
+        [BindProperty] public long Isbn { get; set; }
         [BindProperty] public string Titulo { get; set; }
         [BindProperty] public string Autor { get; set; }
         [BindProperty] public string CategoriaNombre { get; set; }
 
-        [BindProperty] public int IsbnBuscado { get; set; }
-        [BindProperty] public int IsbnAEliminar { get; set; }
+        [BindProperty] public long IsbnBuscado { get; set; }
+        [BindProperty] public long IsbnAEliminar { get; set; }
         [BindProperty] public string CategoriaParaEliminar { get; set; }
         
         // Resultados para mostrar en la vista
@@ -87,9 +88,7 @@ namespace Proyecto2.Pages
                     _xmlService.ProcesarArchivoXml(rutaTemporal);
                     if (System.IO.File.Exists(rutaTemporal)) System.IO.File.Delete(rutaTemporal);
                     
-                    Mensaje = "¡Archivo XML procesado e integrado exitosamente!";
-                    
-                    // Generar los reportes visuales inmediatamente después de procesar el XML
+                    Mensaje = "¡Archivo XML procesado e integrado exitosamente aplicando restricciones y linking diferido!";
                     GenerarReportesVisuales();
                 }
                 catch (Exception ex)
@@ -109,8 +108,15 @@ namespace Proyecto2.Pages
         {
             if (!string.IsNullOrEmpty(NuevaCategoria))
             {
-                _catalogo.ObtenerOCrearCategoria(NuevaCategoria, CategoriaPadre);
-                Mensaje = $"Categoría '{NuevaCategoria}' agregada o enlazada correctamente.";
+                var resultado = _catalogo.ObtenerOCrearCategoria(NuevaCategoria, CategoriaPadre);
+                if (resultado != null)
+                {
+                    Mensaje = $"Categoría '{NuevaCategoria}' agregada o enlazada correctamente.";
+                }
+                else
+                {
+                    Mensaje = $"No se pudo crear la categoría '{NuevaCategoria}'. Verifique que el padre exista.";
+                }
                 GenerarReportesVisuales();
             }
             return Page();
@@ -121,8 +127,15 @@ namespace Proyecto2.Pages
         {
             if (Isbn > 0 && !string.IsNullOrEmpty(Titulo) && !string.IsNullOrEmpty(CategoriaNombre))
             {
-                _catalogo.RegistrarLibro(Isbn, Titulo, Autor, CategoriaNombre);
-                Mensaje = $"Libro con ISBN {Isbn} registrado exitosamente.";
+                bool exito = _catalogo.RegistrarLibro(Isbn, Titulo, Autor, CategoriaNombre);
+                if (exito)
+                {
+                    Mensaje = $"Libro con ISBN {Isbn} registrado exitosamente.";
+                }
+                else
+                {
+                    Mensaje = $"Error: El ISBN {Isbn} ya existe globalmente o la categoría '{CategoriaNombre}' no existe.";
+                }
                 GenerarReportesVisuales();
             }
             else
@@ -135,12 +148,17 @@ namespace Proyecto2.Pages
         // Opción: Eliminar Libro
         public IActionResult OnPostEliminarLibro()
         {
+
             if (IsbnAEliminar > 0 && !string.IsNullOrEmpty(CategoriaParaEliminar))
             {
                 var cat = _catalogo.RaizCategorias.Buscar(CategoriaParaEliminar);
-                if (cat != null)
+                var libroGlobal=_catalogo.TodosLosLibrosGlobal.BuscarPorIsbn(IsbnAEliminar);
+
+                if (cat != null && libroGlobal!= null)
                 {
+                    
                     cat.LibrosAsociados.Eliminar(IsbnAEliminar);
+                   _catalogo.TodosLosLibrosGlobal.eliminar(IsbnAEliminar);
                     Mensaje = $"Libro con ISBN {IsbnAEliminar} eliminado de la categoría '{CategoriaParaEliminar}'.";
                     GenerarReportesVisuales();
                 }

@@ -4,5 +4,5 @@ digraph AVL {
    label="Árbol AVL - Categoria: Ciencias\n";
    labelloc="top";
    fontsize=16;
-   isbn_100 [label="ISBN: 100\nRepetido\nAutor: X"];
+   isbn_9999999999999 [label="ISBN: 9999999999999\nDesborda int\nAutor: Z"];
 }

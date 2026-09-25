@@ -17,53 +17,57 @@ namespace Proyecto2
             
             nombreCategoria = nombreCategoria.Trim();
             NodoCategoria encontrada = RaizCategorias.Buscar(nombreCategoria);
-            if (encontrada != null) return encontrada;
-
-            NodoCategoria nuevaCat = new NodoCategoria(nombreCategoria);
-
-            if (string.IsNullOrEmpty(nombrePadre))
+            if (encontrada != null) {return encontrada;}
+            
+           
+            if(!string.IsNullOrEmpty(nombrePadre))
             {
-                RaizCategorias.Insertar(nuevaCat);
+                nombrePadre=nombrePadre.Trim();
+                NodoCategoria padre =RaizCategorias.Buscar(nombrePadre);
+
+                if(padre== null)
+                {
+                    return null;
+                }
+                 NodoCategoria nuevaCat = new NodoCategoria(nombreCategoria);
+                 padre.SubCategorias.Insertar(nuevaCat);
+                 return nuevaCat;
+
             }
             else
             {
-                nombrePadre = nombrePadre.Trim();
-                NodoCategoria padre = RaizCategorias.Buscar(nombrePadre);
-                if (padre != null)
-                {
-                    padre.SubCategorias.Insertar(nuevaCat);
-                }
-                else
-                {
-                    NodoCategoria nuevoPadre = new NodoCategoria(nombrePadre);
-                    nuevoPadre.SubCategorias.Insertar(nuevaCat);
-                    RaizCategorias.Insertar(nuevoPadre);
-                }
+                NodoCategoria nuevaCat=new NodoCategoria(nombreCategoria);
+                RaizCategorias.Insertar(nuevaCat);
+                return nuevaCat;
             }
 
-            return nuevaCat;
+
         }
 
-        public void RegistrarLibro(long isbn, string titulo, string autor, string nombreCategoria)
+        public bool RegistrarLibro(long isbn, string titulo, string autor, string nombreCategoria)
         {
-            if (string.IsNullOrWhiteSpace(nombreCategoria)) return;
+            
+            if (string.IsNullOrWhiteSpace(nombreCategoria)) return false;
 
+            if(TodosLosLibrosGlobal.BuscarPorIsbn(isbn)!=null)
+            {
+                return false;
+            }
+
+            NodoCategoria cat=RaizCategorias.Buscar(nombreCategoria);
+            if(cat==null)
+            {
+                return false;
+            }
             Libro nuevoLibro = new Libro(isbn, titulo, autor, nombreCategoria);
             
-            // Insertar en la lista global
+         
             TodosLosLibrosGlobal.Insertar(nuevoLibro);
+            cat.LibrosAsociados.Insertar(nuevoLibro);
+            return true;
 
-            // Buscar o crear la categoría y asociar el libro
-            NodoCategoria cat = RaizCategorias.Buscar(nombreCategoria);
-            if (cat != null)
-            {
-                cat.LibrosAsociados.Insertar(nuevoLibro);
-            }
-            else
-            {
-                NodoCategoria nuevaCat = ObtenerOCrearCategoria(nombreCategoria, null);
-                nuevaCat.LibrosAsociados.Insertar(nuevoLibro);
-            }
+    
+           
         }
     }
 }

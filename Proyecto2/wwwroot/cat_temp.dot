@@ -14,26 +14,10 @@ digraph Categorias {
    cat_Fisica [label="Fisica"];
    cat_Ciencia -> cat_Matematicas;
    cat_Matematicas [label="Matematicas"];
-   cat_Inexistente [label="Inexistente"];
    cat_Literatura [label="Literatura"];
-   cat_MARLON [label="MARLON"];
-   cat_MARLON -> cat_JUANCA;
-   cat_JUANCA [label="JUANCA"];
-   cat_JUANCA -> cat_EDDY;
-   cat_EDDY [label="EDDY"];
-   cat_MARLON -> cat_PALOMO;
-   cat_PALOMO [label="PALOMO"];
-   cat_NoExiste [label="NoExiste"];
-   cat_NoExiste -> cat_Huerfana;
-   cat_Huerfana [label="Huerfana"];
    cat_Tecnologia [label="Tecnologia"];
    cat_Tecnologia -> cat_Bases_de_Datos;
    cat_Bases_de_Datos [label="Bases de Datos"];
    cat_Tecnologia -> cat_Programacion;
    cat_Programacion [label="Programacion"];
-   cat_USAC_CAGADAS [label="USAC CAGADAS"];
-   cat_USAC_CAGADAS -> cat_ALOCIONES;
-   cat_ALOCIONES [label="ALOCIONES"];
-   cat_USAC_CAGADAS -> cat_SELVIN;
-   cat_SELVIN [label="SELVIN"];
 }
