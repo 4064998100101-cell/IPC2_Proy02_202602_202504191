@@ -30,31 +30,73 @@ namespace Proyecto2
                 throw new Exception("No se encontró la etiqueta raíz <config> o <configuracion> en el XML.");
             }
 
-            XElement listaCategorias = config.Element("listaCategorias") ?? config.Element("lista_categorias");
-            if (listaCategorias != null)
+        
+            var categoriasElements = config.Element("listaCategorias")?.Elements("categoria") 
+                                  ?? config.Element("lista_categorias")?.Elements("categoria") 
+                                  ?? config.Elements("categoria");
+
+            bool huboProgreso = true;
+            while (huboProgreso)
             {
-                foreach (var catElement in listaCategorias.Elements("categoria"))
+                huboProgreso = false;
+
+                foreach (var catElement in categoriasElements)
                 {
-                    string nombreCategoria = catElement.Value;
-                    string nombrePadre = catElement.Attribute("padre")?.Value;
-                    _catalogo.ObtenerOCrearCategoria(nombreCategoria, nombrePadre);
+                    string nombreCategoria = catElement.Value?.Trim();
+                    string nombrePadre = catElement.Attribute("padre")?.Value?.Trim();
+
+                    if (string.IsNullOrEmpty(nombreCategoria)) continue;
+
+                    // Si la categoría ya fue creada en el catálogo, la saltamos
+                    if (_catalogo.RaizCategorias.Buscar(nombreCategoria) != null) continue;
+
+                    if (string.IsNullOrEmpty(nombrePadre))
+                    {
+                        // Es una categoría raíz válida
+                        _catalogo.ObtenerOCrearCategoria(nombreCategoria, null);
+                        huboProgreso = true;
+                    }
+                    else
+                    {
+                        // Verificamos si el padre ya existe en el sistema
+                        var padreEncontrado = _catalogo.RaizCategorias.Buscar(nombrePadre);
+                        if (padreEncontrado != null)
+                        {
+                            _catalogo.ObtenerOCrearCategoria(nombreCategoria, nombrePadre);
+                            huboProgreso = true;
+                        }
+                    }
                 }
             }
 
-            XElement listaLibros = config.Element("listaLibros") ?? config.Element("lista_libros");
-            if (listaLibros != null)
-            {
-                foreach (var libroElement in listaLibros.Elements("libro"))
-                {
-                    int isbn = int.Parse(libroElement.Element("ISBN")?.Value ?? libroElement.Element("isbn")?.Value ?? "0");
-                    string titulo = libroElement.Element("titulo")?.Value ?? "";
-                    string autor = libroElement.Element("autor")?.Value ?? "";
-                    string categoria = libroElement.Element("categoria")?.Value ?? "";
+            var librosElements = config.Element("listaLibros")?.Elements("libro") 
+                              ?? config.Element("lista_libros")?.Elements("libro") 
+                              ?? config.Elements("libro");
 
-                    if (isbn > 0 && !string.IsNullOrEmpty(titulo))
+            foreach (var libroElement in librosElements)
+            {
+                string textoIsbn = libroElement.Element("ISBN")?.Value ?? libroElement.Element("isbn")?.Value;
+                string titulo = libroElement.Element("titulo")?.Value ?? "";
+                string autor = libroElement.Element("autor")?.Value ?? "";
+                string categoria = libroElement.Element("categoria")?.Value ?? "";
+
+    
+                if (long.TryParse(textoIsbn, out long isbn) && isbn > 0 && !string.IsNullOrEmpty(titulo) && !string.IsNullOrEmpty(categoria))
+                {
+                
+                    if (_catalogo.TodosLosLibrosGlobal.BuscarPorIsbn(isbn) != null)
                     {
-                        _catalogo.RegistrarLibro(isbn, titulo, autor, categoria);
+                        continue; 
                     }
+
+                 
+                    var categoriaDestino = _catalogo.RaizCategorias.Buscar(categoria);
+                    if (categoriaDestino == null)
+                    {
+                        continue; 
+                    }
+
+                    _catalogo.RegistrarLibro(isbn, titulo, autor, categoria);
                 }
             }
         }

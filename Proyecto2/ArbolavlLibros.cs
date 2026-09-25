@@ -88,13 +88,13 @@ namespace Proyecto2
             }
             else
             {
-                return nodo; // No se permiten duplicados
+                return nodo; 
             }
 
             nodo.Altura = 1 + Max(obteneraltura(nodo.izquierda), obteneraltura(nodo.derecha));
             int balance = obtenerbalance(nodo);
 
-            // Casos de desbalanceo
+
             if (balance > 1 && libro.Isbn < nodo.izquierda.Valor.Isbn)
                 return RotarDerecha(nodo);
 
@@ -116,12 +116,12 @@ namespace Proyecto2
             return nodo;
         }
 
-        public void Eliminar(int isbn)
+        public void Eliminar(long isbn)
         {
             Raiz = eliminarRec(Raiz, isbn);
         }
 
-        private Nodoarbol eliminarRec(Nodoarbol raiz, int isbn)
+        private Nodoarbol eliminarRec(Nodoarbol raiz, long isbn)
         {
             if (raiz == null) return null;
 

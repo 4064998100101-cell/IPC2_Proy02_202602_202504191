@@ -42,7 +42,7 @@ namespace Proyecto2
             Tamanio++;
         }
 
-        public Libro BuscarPorIsbn(int isbn)
+        public Libro BuscarPorIsbn(long isbn)
         {
             NodoLibro actual = Cabeza;
             while (actual != null)

@@ -44,7 +44,7 @@ namespace Proyecto2
             return nuevaCat;
         }
 
-        public void RegistrarLibro(int isbn, string titulo, string autor, string nombreCategoria)
+        public void RegistrarLibro(long isbn, string titulo, string autor, string nombreCategoria)
         {
             if (string.IsNullOrWhiteSpace(nombreCategoria)) return;
 
