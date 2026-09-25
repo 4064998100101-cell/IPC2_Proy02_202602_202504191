@@ -17,57 +17,50 @@ namespace Proyecto2
             
             nombreCategoria = nombreCategoria.Trim();
             NodoCategoria encontrada = RaizCategorias.Buscar(nombreCategoria);
-            if (encontrada != null) {return encontrada;}
+            if (encontrada != null) { return encontrada; }
             
-           
-            if(!string.IsNullOrEmpty(nombrePadre))
+            if (!string.IsNullOrEmpty(nombrePadre))
             {
-                nombrePadre=nombrePadre.Trim();
-                NodoCategoria padre =RaizCategorias.Buscar(nombrePadre);
+                nombrePadre = nombrePadre.Trim();
+                NodoCategoria padre = RaizCategorias.Buscar(nombrePadre);
 
-                if(padre== null)
+                if (padre == null)
                 {
                     return null;
                 }
-                 NodoCategoria nuevaCat = new NodoCategoria(nombreCategoria);
-                 padre.SubCategorias.Insertar(nuevaCat);
-                 return nuevaCat;
-
+                NodoCategoria nuevaCat = new NodoCategoria(nombreCategoria);
+                padre.SubCategorias.Insertar(nuevaCat);
+                return nuevaCat;
             }
             else
             {
-                NodoCategoria nuevaCat=new NodoCategoria(nombreCategoria);
+                NodoCategoria nuevaCat = new NodoCategoria(nombreCategoria);
                 RaizCategorias.Insertar(nuevaCat);
                 return nuevaCat;
             }
-
-
         }
 
         public bool RegistrarLibro(long isbn, string titulo, string autor, string nombreCategoria)
         {
-            
             if (string.IsNullOrWhiteSpace(nombreCategoria)) return false;
 
-            if(TodosLosLibrosGlobal.BuscarPorIsbn(isbn)!=null)
+            if (TodosLosLibrosGlobal.BuscarPorIsbn(isbn) != null)
             {
                 return false;
             }
 
-            NodoCategoria cat=RaizCategorias.Buscar(nombreCategoria);
-            if(cat==null)
+            NodoCategoria cat = RaizCategorias.Buscar(nombreCategoria);
+            if (cat == null)
             {
                 return false;
             }
+
             Libro nuevoLibro = new Libro(isbn, titulo, autor, nombreCategoria);
             
-         
             TodosLosLibrosGlobal.Insertar(nuevoLibro);
             cat.LibrosAsociados.Insertar(nuevoLibro);
+            
             return true;
-
-    
-           
         }
     }
 }

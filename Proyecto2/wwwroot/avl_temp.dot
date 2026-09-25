@@ -1,8 +1,22 @@
 digraph AVL {
    node [shape=box, style="rounded,filled", fillcolor="#e8f4f8", fontname="Arial"];
    edge [fontname="Arial"];
-   label="Árbol AVL - Categoria: Ciencias\n";
+   label="Árbol AVL - Categoria: Fisica\n";
    labelloc="top";
    fontsize=16;
-   isbn_9999999999999 [label="ISBN: 9999999999999\nDesborda int\nAutor: Z"];
+   isbn_1040 [label="ISBN: 1040\nLibro 40 - Fisica\nAutor: Autor J"];
+   isbn_1040 -> isbn_1038;
+   isbn_1038 [label="ISBN: 1038\nLibro 38 - Fisica\nAutor: Autor H"];
+   isbn_1038 -> isbn_1037;
+   isbn_1037 [label="ISBN: 1037\nLibro 37 - Fisica\nAutor: Autor G"];
+   isbn_1037 -> isbn_100;
+   isbn_100 [label="ISBN: 100\nFisica General\nAutor: Marie Curie"];
+   isbn_1038 -> isbn_1039;
+   isbn_1039 [label="ISBN: 1039\nLibro 39 - Fisica\nAutor: Autor I"];
+   isbn_1040 -> isbn_1042;
+   isbn_1042 [label="ISBN: 1042\nLibro 42 - Fisica\nAutor: Autor B"];
+   isbn_1042 -> isbn_1041;
+   isbn_1041 [label="ISBN: 1041\nLibro 41 - Fisica\nAutor: Autor A"];
+   isbn_1042 -> isbn_1043;
+   isbn_1043 [label="ISBN: 1043\nLibro 43 - Fisica\nAutor: Autor C"];
 }

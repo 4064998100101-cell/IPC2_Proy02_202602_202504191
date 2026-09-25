@@ -22,7 +22,6 @@ namespace Proyecto2
 
             XDocument doc = XDocument.Load(rutaArchivo);
             
-            // Buscamos <config> o <configuracion> para ser flexibles
             XElement config = doc.Element("config") ?? doc.Element("configuracion");
 
             if (config == null)
@@ -30,10 +29,9 @@ namespace Proyecto2
                 throw new Exception("No se encontró la etiqueta raíz <config> o <configuracion> en el XML.");
             }
 
-        
             var categoriasElements = config.Element("listaCategorias")?.Elements("categoria") 
-                                  ?? config.Element("lista_categorias")?.Elements("categoria") 
-                                  ?? config.Elements("categoria");
+                                      ?? config.Element("lista_categorias")?.Elements("categoria") 
+                                      ?? config.Elements("categoria");
 
             bool huboProgreso = true;
             while (huboProgreso)
@@ -47,18 +45,15 @@ namespace Proyecto2
 
                     if (string.IsNullOrEmpty(nombreCategoria)) continue;
 
-                    // Si la categoría ya fue creada en el catálogo, la saltamos
                     if (_catalogo.RaizCategorias.Buscar(nombreCategoria) != null) continue;
 
                     if (string.IsNullOrEmpty(nombrePadre))
                     {
-                        // Es una categoría raíz válida
                         _catalogo.ObtenerOCrearCategoria(nombreCategoria, null);
                         huboProgreso = true;
                     }
                     else
                     {
-                        // Verificamos si el padre ya existe en el sistema
                         var padreEncontrado = _catalogo.RaizCategorias.Buscar(nombrePadre);
                         if (padreEncontrado != null)
                         {
@@ -70,8 +65,8 @@ namespace Proyecto2
             }
 
             var librosElements = config.Element("listaLibros")?.Elements("libro") 
-                              ?? config.Element("lista_libros")?.Elements("libro") 
-                              ?? config.Elements("libro");
+                                 ?? config.Element("lista_libros")?.Elements("libro") 
+                                 ?? config.Elements("libro");
 
             foreach (var libroElement in librosElements)
             {
@@ -80,16 +75,13 @@ namespace Proyecto2
                 string autor = libroElement.Element("autor")?.Value ?? "";
                 string categoria = libroElement.Element("categoria")?.Value ?? "";
 
-    
                 if (long.TryParse(textoIsbn, out long isbn) && isbn > 0 && !string.IsNullOrEmpty(titulo) && !string.IsNullOrEmpty(categoria))
                 {
-                
                     if (_catalogo.TodosLosLibrosGlobal.BuscarPorIsbn(isbn) != null)
                     {
                         continue; 
                     }
 
-                 
                     var categoriaDestino = _catalogo.RaizCategorias.Buscar(categoria);
                     if (categoriaDestino == null)
                     {
